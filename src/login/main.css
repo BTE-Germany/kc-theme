@@ -1,0 +1,9 @@
+@import url(./assets/fonts/Geist/main.css);
+@import url(./assets/fonts/LexendDeca/main.css);
+body {
+    font-family: 'Lexend Deca', sans-serif;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
