@@ -26,6 +26,7 @@ const IdpReviewUserProfile = lazy(() => import("./pages/IdpReviewUserProfile"));
 const LoginPageExpired = lazy(() => import("./pages/LoginPageExpired"));
 const LoginVerifyEmail = lazy(() => import("./pages/LoginVerifyEmail"));
 const LoginOtp = lazy(() => import("./pages/LoginOtp"));
+const LinkIdpAction = lazy(() => import("./pages/LinkIdpAction"));
 
 
 const doMakeUserConfirmPassword = true;
@@ -148,6 +149,14 @@ export default function KcPage(props: { kcContext: KcContext }) {
                                     {...{ kcContext, i18n, classes }}
                                     Template={Template}
                                     doUseDefaultCss={true}
+                                />
+                            );
+                            case "link-idp-action.ftl":
+                            return (
+                                <LinkIdpAction
+                                    {...{ kcContext, i18n, classes }}
+                                    Template={Template}
+                                    doUseDefaultCss={false}
                                 />
                             );
                         default:

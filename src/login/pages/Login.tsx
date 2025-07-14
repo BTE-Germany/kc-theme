@@ -53,7 +53,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
             classes={classes}
             displayMessage={!messagesPerField.existsError("username", "password")}
             headerNode={<>
-                <span>{msg("loginAccountTitle")}</span>
+                <span>{msg("loginAccountTitle")}</span><br/>
                 <span className={"text-sm text-neutral-500 font-normal"}>{msg("loginAccountSubtitle")}</span>
             </>}
             displayInfo={realm.password && realm.registrationAllowed && !registrationDisabled}
@@ -72,7 +72,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
             }
             socialProvidersNode={
                 <>
-                    {realm.password && social.providers?.length && (
+                    {realm.password && social?.providers?.length && (
                         <div id="kc-social-providers" className={"mt-4"}>
                             <Divider my="lg" label={msg("identity-provider-login-label")} labelPosition="center" />
 

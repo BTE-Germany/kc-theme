@@ -1,9 +1,7 @@
 import { useEffect } from "react";
-import { assert } from "keycloakify/tools/assert";
 import type { TemplateProps } from "keycloakify/login/TemplateProps";
 import { getKcClsx } from "keycloakify/login/lib/kcClsx";
-import { useInsertScriptTags } from "keycloakify/tools/useInsertScriptTags";
-import { useInsertLinkTags } from "keycloakify/tools/useInsertLinkTags";
+import { useInitialize } from "keycloakify/login/Template.useInitialize";
 import { useSetClassName } from "keycloakify/tools/useSetClassName";
 import type { I18n } from "./i18n";
 import type { KcContext } from "./KcContext";
@@ -39,9 +37,10 @@ export default function CustomTemplate(props: TemplateProps<KcContext, I18n>) {
 
     const { kcClsx } = getKcClsx({ doUseDefaultCss, classes });
 
-    const { msg, msgStr } = i18n;
+    const { msg, msgStr, enabledLanguages } = i18n;
 
-    const { realm, locale, auth, url, message, isAppInitiatedAction, authenticationSession, scripts } = kcContext;
+    const { auth, url, message, isAppInitiatedAction } = kcContext;
+
 
     useEffect(() => {
         document.title = documentTitle ?? msgStr("loginTitle", kcContext.realm.displayName);
@@ -57,65 +56,10 @@ export default function CustomTemplate(props: TemplateProps<KcContext, I18n>) {
         className: bodyClassName ?? kcClsx("kcBodyClass")
     });
 
-    useEffect(() => {
-        const { currentLanguageTag } = locale ?? {};
 
-        if (currentLanguageTag === undefined) {
-            return;
-        }
+    const { isReadyToRender } = useInitialize({ kcContext, doUseDefaultCss });
 
-        const html = document.querySelector("html");
-        assert(html !== null);
-        html.lang = currentLanguageTag;
-    }, []);
-
-    const { areAllStyleSheetsLoaded } = useInsertLinkTags({
-        componentOrHookName: "Template",
-        hrefs: !doUseDefaultCss
-            ? []
-            : []
-    });
-
-    const { insertScriptTags } = useInsertScriptTags({
-        componentOrHookName: "Template",
-        scriptTags: [
-            {
-                type: "module",
-                src: `${url.resourcesPath}/js/menu-button-links.js`
-            },
-            ...(authenticationSession === undefined
-                ? []
-                : [
-                    {
-                        type: "module",
-                        textContent: [
-                            `import { checkCookiesAndSetTimer } from "${url.resourcesPath}/js/authChecker.js";`,
-                            ``,
-                            `checkCookiesAndSetTimer(`,
-                            `  "${authenticationSession.authSessionId}",`,
-                            `  "${authenticationSession.tabId}",`,
-                            `  "${url.ssoLoginInOtherTabsUrl}"`,
-                            `);`
-                        ].join("\n")
-                    } as const
-                ]),
-            ...scripts.map(
-                script =>
-                    ({
-                        type: "text/javascript",
-                        src: script
-                    }) as const
-            )
-        ]
-    });
-
-    useEffect(() => {
-        if (areAllStyleSheetsLoaded) {
-            insertScriptTags();
-        }
-    }, [areAllStyleSheetsLoaded]);
-
-    if (!areAllStyleSheetsLoaded) {
+    if (!isReadyToRender) {
         return null;
     }
 
@@ -152,7 +96,7 @@ export default function CustomTemplate(props: TemplateProps<KcContext, I18n>) {
                                 }
                             </div>
                         </div>
-                        {realm.internationalizationEnabled && (assert(locale !== undefined), locale.supported.length > 1) && (
+                        {enabledLanguages.length > 1 && (
                             <LanguagePicker i18n={i18n} kcContext={kcContext} />
                         )}
                     </div>

@@ -7,6 +7,13 @@ export type KcContextExtension = {
     properties: Record<KcEnvName, string> & {};
 };
 
-export type KcContextExtensionPerPage = {};
+export type KcContextExtensionPerPage = {
+    "link-idp-action.ftl": {
+        idpDisplayName: string;
+        url: {
+            loginAction: "#"
+        }
+    }
+};
 
 export type KcContext = ExtendKcContext<KcContextExtension, KcContextExtensionPerPage>;
