@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="1fd7455d-abe1-4347-95fe-f46081a8cc44" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/public/background.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/dotted-background.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/logo-bg-round.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/outfit/main.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/outfit/outfit-v15-latin-100.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/outfit/outfit-v15-latin-200.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/outfit/outfit-v15-latin-300.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/outfit/outfit-v15-latin-500.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/outfit/outfit-v15-latin-600.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/outfit/outfit-v15-latin-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/outfit/outfit-v15-latin-800.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/outfit/outfit-v15-latin-900.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/outfit/outfit-v15-latin-regular.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/worksans/main.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/worksans/work-sans-v23-latin-100.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/worksans/work-sans-v23-latin-100italic.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/worksans/work-sans-v23-latin-200.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/worksans/work-sans-v23-latin-200italic.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/worksans/work-sans-v23-latin-300.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/worksans/work-sans-v23-latin-300italic.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/worksans/work-sans-v23-latin-500.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/worksans/work-sans-v23-latin-500italic.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/worksans/work-sans-v23-latin-600.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/worksans/work-sans-v23-latin-600italic.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/worksans/work-sans-v23-latin-700.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/worksans/work-sans-v23-latin-700italic.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/worksans/work-sans-v23-latin-800.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/worksans/work-sans-v23-latin-800italic.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/worksans/work-sans-v23-latin-900.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/worksans/work-sans-v23-latin-900italic.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/worksans/work-sans-v23-latin-italic.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/fonts/worksans/work-sans-v23-latin-regular.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/kc.gen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/kc.gen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/login/KcPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/login/KcPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.node.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.node.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vite.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/vite.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Nachwahl&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/keycloakify/keycloakify-starter&quot;,
+    &quot;accountId&quot;: &quot;f1179c44-7ef2-4f27-bc41-6ac36ccca04c&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2zvSGTXjzdW8FeCb35vk7iuPj1t" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;24.5.0&quot;,
+    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;24.3.1&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;H:/BTE Germany/kc-theme-v3/src/assets/fonts/outfit&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_interpreter_path&quot;: &quot;node&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;pnpm&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;H:\\BTE Germany\\kc-theme-v3\\node_modules\\prettier&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.github.copilot.settings.general.GeneralConfigurable&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;H:\\BTE Germany\\kc-theme-v3\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="ReactDesignerToolWindowState">
+    <option name="myId2Visible">
+      <map>
+        <entry key="com.intellij.reactbuddy.reactComponents" value="false" />
+        <entry key="com.intellij.reactbuddy.reactInspector" value="false" />
+        <entry key="com.intellij.reactbuddy.storybook" value="false" />
+      </map>
+    </option>
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="H:\BTE Germany\kc-theme-v3\src\assets\fonts\outfit" />
+      <recent name="H:\BTE Germany\kc-theme-v3\public" />
+      <recent name="H:\StreamP\kc-theme-v3\public" />
+      <recent name="H:\StreamP\kc-theme-v3\src\assets\fonts\worksans" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="H:\BTE Germany\kc-theme-v3\src\assets\fonts\outfit" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-9c94529fcfe0-JavaScript-WS-252.26199.162" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1fd7455d-abe1-4347-95fe-f46081a8cc44" name="Changes" comment="" />
+      <created>1732743558951</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1732743558951</updated>
+      <workItem from="1752609959078" duration="59000" />
+      <workItem from="1752611604712" duration="3865000" />
+      <workItem from="1752677693419" duration="8807000" />
+      <workItem from="1752782602292" duration="2965000" />
+      <workItem from="1752958450367" duration="46000" />
+      <workItem from="1753030435092" duration="60000" />
+      <workItem from="1753030507349" duration="247000" />
+      <workItem from="1753030794816" duration="3478000" />
+      <workItem from="1753126490672" duration="2081000" />
+      <workItem from="1753210635702" duration="9000" />
+      <workItem from="1757447614867" duration="127000" />
+      <workItem from="1757867102587" duration="271000" />
+      <workItem from="1757950655110" duration="17000" />
+      <workItem from="1757964354986" duration="1225000" />
+      <workItem from="1758037233751" duration="7000" />
+      <workItem from="1759087414822" duration="1577000" />
+      <workItem from="1759436128176" duration="3447000" />
+      <workItem from="1759508149199" duration="1418000" />
+      <workItem from="1759516639760" duration="45000" />
+      <workItem from="1759605599481" duration="3000" />
+      <workItem from="1759670720890" duration="3194000" />
+      <workItem from="1761066447283" duration="2394000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
