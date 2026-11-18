@@ -1,58 +1,46 @@
-<p align="center">
-    <i>🚀 <a href="https://keycloakify.dev">Keycloakify</a> v11 starter 🚀</i>
-    <br/>
-    <br/>
-</p>
+# BTE Germany Keycloak theme
 
-# Quick start
+Login theme for the BuildTheEarth Germany Keycloak instance, built with [Keycloakify](https://keycloakify.dev) 11, React 19 and Tailwind CSS 4.
 
-```bash
-git clone https://github.com/keycloakify/keycloakify-starter
-cd keycloakify-starter
-yarn install # Or use an other package manager, just be sure to delete the yarn.lock if you use another package manager.
-```
+- Dark, split-screen layout: form on the left, a random build from the BTE Germany CMS on the right (or as a soft backdrop on small screens).
+- Every Keycloak login page is implemented with the same components, so all flows (login, registration, password reset, OTP, passkeys, IdP linking, OAuth consent, errors, …) look consistent.
+- Responsive from 320px phones to ultra-wide screens.
+- Subtle motion (staggered page entrance, alert shake, Ken Burns background, loading spinners), disabled for users who prefer reduced motion.
+- Theme texts in English and German (`src/login/i18n.ts`); everything else uses Keycloak's message bundles.
 
-# Testing the theme locally
+## Development
 
-[Documentation](https://docs.keycloakify.dev/testing-your-theme)
-
-# How to customize the theme
-
-[Documentation](https://docs.keycloakify.dev/customization-strategies)
-
-# Building the theme
-
-You need to have [Maven](https://maven.apache.org/) installed to build the theme (Maven >= 3.1.1, Java >= 7).  
-The `mvn` command must be in the $PATH.
-
--   On macOS: `brew install maven`
--   On Debian/Ubuntu: `sudo apt-get install maven`
--   On Windows: `choco install openjdk` and `choco install maven` (Or download from [here](https://maven.apache.org/download.cgi))
+Requires Node `^20.19.0 || >=22.12.0` and pnpm.
 
 ```bash
-npm run build-keycloak-theme
+pnpm install
+pnpm storybook   # every page and state as a story on http://localhost:6006
 ```
 
-Note that by default Keycloakify generates multiple .jar files for different versions of Keycloak.  
-You can customize this behavior, see documentation [here](https://docs.keycloakify.dev/features/compiler-options/keycloakversiontargets).
+To preview a single page with `pnpm dev`, uncomment the mock block in `src/main.tsx`.
 
-# Initializing the account theme
+## Project layout
+
+| Path                                  | Purpose                                                           |
+| ------------------------------------- | ----------------------------------------------------------------- |
+| `src/login/Template.tsx`              | Page shell: header, language switcher, alerts, footer, background |
+| `src/login/KcPage.tsx`                | Maps Keycloak page ids to page components                         |
+| `src/login/pages/`                    | One component (plus `.stories.tsx`) per Keycloak page             |
+| `src/login/components/`               | Theme building blocks (page header, fields, password input, …)    |
+| `src/login/UserProfileFormFields.tsx` | Dynamic user profile form (registration, update profile, …)       |
+| `src/components/ui/`                  | Base UI primitives (button, input, checkbox, alert, …)            |
+| `src/index.css`                       | Design tokens, animations                                         |
+
+## Building the theme
+
+You need [Maven](https://maven.apache.org/) (>= 3.1.1) and Java (>= 7) to build the `.jar`.
 
 ```bash
-npx keycloakify initialize-account-theme
+pnpm build-keycloak-theme
 ```
 
-# Initializing the email theme
+The jars are written to `dist_keycloak/`. See the [Keycloakify docs](https://docs.keycloakify.dev/features/compiler-options/keycloakversiontargets) for targeting specific Keycloak versions.
 
-```bash
-npx keycloakify initialize-email-theme
-```
+## Releases
 
-# GitHub Actions
-
-The starter comes with a generic GitHub Actions workflow that builds the theme and publishes
-the jars [as GitHub releases artifacts](https://github.com/keycloakify/keycloakify-starter/releases/tag/v10.0.0).  
-To release a new version **just update the `package.json` version and push**.
-
-To enable the workflow go to your fork of this repository on GitHub then navigate to:
-`Settings` > `Actions` > `Workflow permissions`, select `Read and write permissions`.
+The GitHub Actions workflow builds the theme and publishes the jars as release artifacts. To release, bump `version` in `package.json` and push to `main`.
