@@ -38,19 +38,19 @@ export default function LoginResetPassword(
             displayInfo
             displayMessage={!messagesPerField.existsError("username")}
             headerNode={<>
-                <h1 className={"text-4xl font-semibold mt-6"}>{msg("emailForgotTitle")}</h1>
-                <p className={"text-md mt-2 text-neutral-500 max-w-sm text-center"}>{realm.duplicateEmailsAllowed ? msg("emailInstructionUsername") : msg("emailInstruction")}</p>
+                <h1 className={"text-2xl sm:text-3xl md:text-4xl font-semibold mt-4 sm:mt-6"}>{msg("emailForgotTitle")}</h1>
+                <p className={"text-sm sm:text-md mt-2 text-neutral-500 max-w-sm text-center"}>{realm.duplicateEmailsAllowed ? msg("emailInstructionUsername") : msg("emailInstruction")}</p>
             </>}
         >
             <form id="kc-reset-password-form" className={kcClsx("kcFormClass")} action={url.loginAction} method="post">
-                <div className={"w-sm"}>
+                <div className={"w-full max-w-sm"}>
                     <div className="grid w-full max-w-sm items-center gap-3">
                         <Label htmlFor="username">
                             {!realm.loginWithEmailAllowed
                                 ? msg("username")
                                 : !realm.registrationEmailAsUsername
-                                  ? msg("usernameOrEmail")
-                                  : msg("email")}
+                                    ? msg("usernameOrEmail")
+                                    : msg("email")}
                         </Label>
                         <Input
                             type="text"

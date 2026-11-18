@@ -18,9 +18,9 @@ export default function LoginIdpLinkConfirm(props: PageProps<Extract<KcContext, 
     const { msg } = i18n;
 
     return (
-        <Template kcContext={kcContext} i18n={i18n} doUseDefaultCss={doUseDefaultCss} classes={classes} headerNode={<h1 className={"text-4xl font-semibold mt-6"}>{msg("confirmLinkIdpTitle")}</h1>}>
+        <Template kcContext={kcContext} i18n={i18n} doUseDefaultCss={doUseDefaultCss} classes={classes} headerNode={<h1 className={"text-2xl sm:text-3xl md:text-4xl font-semibold mt-4 sm:mt-6"}>{msg("confirmLinkIdpTitle")}</h1>}>
             <form id="kc-register-form" action={url.loginAction} method="post">
-                <div className={"flex flex-col gap-4 w-md"}>
+                <div className={"flex flex-col gap-4 w-full max-w-md"}>
                     <Button
                         type="submit"
                         className={kcClsx("kcButtonClass", "kcButtonDefaultClass", "kcButtonBlockClass", "kcButtonLargeClass")}

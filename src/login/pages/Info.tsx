@@ -20,7 +20,7 @@ export default function Info(props: PageProps<Extract<KcContext, { pageId: "info
             displayMessage={false}
             headerNode={
                 <>
-                    <h1 className={"text-4xl font-semibold mt-6"}><span
+                    <h1 className={"text-2xl sm:text-3xl md:text-4xl font-semibold mt-4 sm:mt-6"}><span
                         dangerouslySetInnerHTML={{
                             __html: kcSanitize(messageHeader ?? message.summary)
                         }}
@@ -29,7 +29,7 @@ export default function Info(props: PageProps<Extract<KcContext, { pageId: "info
 
             }
         >
-            <div id="kc-info-message" className={"w-md text-foreground text-center"}>
+            <div id="kc-info-message" className={"w-full max-w-md text-foreground text-center"}>
                 <p
                     className="instruction"
                     dangerouslySetInnerHTML={{

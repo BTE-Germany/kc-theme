@@ -15,9 +15,9 @@ export default function LoginIdpLinkEmail(props: PageProps<Extract<KcContext, { 
             i18n={i18n}
             doUseDefaultCss={doUseDefaultCss}
             classes={classes}
-            headerNode={<h1 className={"text-4xl font-semibold mt-6"}>{msg("emailLinkIdpTitle", idpAlias)}</h1>}
+            headerNode={<h1 className={"text-2xl sm:text-3xl md:text-4xl font-semibold mt-4 sm:mt-6"}>{msg("emailLinkIdpTitle", idpAlias)}</h1>}
         >
-            <div className={"w-md text-foreground flex flex-col gap-4"}>
+            <div className={"w-full max-w-md text-foreground flex flex-col gap-4"}>
                 <p id="instruction1" className="instruction font-medium">
                     {msg("emailLinkIdp1", idpAlias, brokerContext.username, realm.displayName)}
                 </p>

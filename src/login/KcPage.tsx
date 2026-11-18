@@ -109,15 +109,18 @@ export default function KcPage(props: { kcContext: KcContext }) {
                         );
                     default:
                         return (
-                            <DefaultPage
-                                kcContext={kcContext}
-                                i18n={i18n}
-                                classes={classes}
-                                Template={Template}
-                                doUseDefaultCss={true}
-                                UserProfileFormFields={UserProfileFormFields}
-                                doMakeUserConfirmPassword={doMakeUserConfirmPassword}
-                            />
+                            <>
+                                {kcContext.pageId}
+                                <DefaultPage
+                                    kcContext={kcContext}
+                                    i18n={i18n}
+                                    classes={classes}
+                                    Template={Template}
+                                    doUseDefaultCss={false}
+                                    UserProfileFormFields={UserProfileFormFields}
+                                    doMakeUserConfirmPassword={doMakeUserConfirmPassword}
+                                />
+                            </>
                         );
                 }
             })()}

@@ -16,10 +16,10 @@ export default function LoginVerifyEmail(props: PageProps<Extract<KcContext, { p
             doUseDefaultCss={doUseDefaultCss}
             classes={classes}
             displayInfo
-            headerNode={<h1 className={"text-4xl font-semibold mt-6"}>{msg("emailVerifyTitle")}</h1>}
+            headerNode={<h1 className={"text-2xl sm:text-3xl md:text-4xl font-semibold mt-4 sm:mt-6"}>{msg("emailVerifyTitle")}</h1>}
 
         >
-            <div className={"w-md text-foreground"}>
+            <div className={"w-full max-w-md text-foreground"}>
                 <p className="instruction">{msg("emailVerifyInstruction1", user?.email ?? "")}</p>
                 <p className="instruction mt-4 text-muted-foreground">
                     {msg("emailVerifyInstruction2")}

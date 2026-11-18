@@ -25,7 +25,7 @@ export default function Register(props: RegisterProps) {
         classes
     });
 
-    const {url, messagesPerField, recaptchaRequired, recaptchaVisible, recaptchaSiteKey, recaptchaAction, termsAcceptanceRequired } =
+    const { url, messagesPerField, recaptchaRequired, recaptchaVisible, recaptchaSiteKey, recaptchaAction, termsAcceptanceRequired } =
         kcContext;
 
     const { msg, msgStr } = i18n;
@@ -41,14 +41,14 @@ export default function Register(props: RegisterProps) {
             classes={classes}
             headerNode={
                 <>
-                    <h1 className={"text-4xl font-semibold mt-6"}>Herzlich Willkommen.</h1>
-                    <p className={"text-md mt-2 text-neutral-500"}>Gebe unten die erforderlichen Daten an.</p>
+                    <h1 className={"text-2xl sm:text-3xl md:text-4xl font-semibold mt-4 sm:mt-6"}>Herzlich Willkommen.</h1>
+                    <p className={"text-sm sm:text-md mt-2 text-neutral-500"}>Gebe unten die erforderlichen Daten an.</p>
                 </>
             }
             displayMessage={messagesPerField.exists("global")}
             displayRequiredFields
         >
-            <form id="kc-register-form" className={"w-sm"} action={url.registrationAction} method="post">
+            <form id="kc-register-form" className={"w-full max-w-sm"} action={url.registrationAction} method="post">
                 <UserProfileFormFields
                     kcContext={kcContext}
                     i18n={i18n}
@@ -147,14 +147,14 @@ function TermsAcceptance(props: {
                     </p>
                     {messagesPerField.existsError("termsAccepted") && (
                         <p className="text-destructive text-sm">
-                        <span
-                            id="input-error-terms-accepted"
-                            className={kcClsx("kcInputErrorMessageClass")}
-                            aria-live="polite"
-                            dangerouslySetInnerHTML={{
-                                __html: kcSanitize(messagesPerField.get("termsAccepted"))
-                            }}
-                        />
+                            <span
+                                id="input-error-terms-accepted"
+                                className={kcClsx("kcInputErrorMessageClass")}
+                                aria-live="polite"
+                                dangerouslySetInnerHTML={{
+                                    __html: kcSanitize(messagesPerField.get("termsAccepted"))
+                                }}
+                            />
                         </p>
                     )}
                 </div>

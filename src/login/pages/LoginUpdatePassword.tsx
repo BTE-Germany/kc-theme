@@ -31,10 +31,10 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
             doUseDefaultCss={doUseDefaultCss}
             classes={classes}
             displayMessage={!messagesPerField.existsError("password", "password-confirm")}
-            headerNode={<h1 className={"text-4xl font-semibold mt-6"}>{msg("updatePasswordTitle")}</h1>}
+            headerNode={<h1 className={"text-2xl sm:text-3xl md:text-4xl font-semibold mt-4 sm:mt-6"}>{msg("updatePasswordTitle")}</h1>}
         >
             <form id="kc-passwd-update-form" className={kcClsx("kcFormClass")} action={url.loginAction} method="post">
-                <div className={"w-sm flex flex-col gap-4"}>
+                <div className={"w-full max-w-sm flex flex-col gap-4"}>
                     <div className="grid w-full max-w-sm items-center gap-3">
                         <Label htmlFor="password-new">{msg("passwordNew")}</Label>
                         <PasswordWrapper kcClsx={kcClsx} i18n={i18n} passwordInputId="password-new">
@@ -88,7 +88,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
 
                 <div className={kcClsx("kcFormGroupClass")}>
 
-                    <div id="kc-form-buttons" className={classNames("mt-8",{
+                    <div id="kc-form-buttons" className={classNames("mt-8", {
                         "grid grid-cols-2 gap-3": isAppInitiatedAction
                     })}>
                         {isAppInitiatedAction && (
@@ -117,7 +117,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
 }
 
 function LogoutOtherSessions(props: { kcClsx: KcClsx; i18n: I18n }) {
-    const {  i18n } = props;
+    const { i18n } = props;
 
     const { msg } = i18n;
 
