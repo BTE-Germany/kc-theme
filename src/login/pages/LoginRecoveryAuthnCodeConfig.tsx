@@ -59,9 +59,9 @@ export default function LoginRecoveryAuthnCodeConfig(props: PageProps<Extract<Kc
 
                 <div className="overflow-hidden rounded-lg border bg-card/60">
                     {/* The script reads each item's innerText ("1: XXXX-XXXX-XXXX"), so keep each item's content inline (no flex/block children that would add line breaks). */}
-                    <ol id={olRecoveryCodesListId} className="gap-x-8 px-4 py-3 font-mono text-sm text-foreground sm:columns-2">
+                    <ol id={olRecoveryCodesListId} className="gap-x-4 px-4 py-3 font-mono text-sm text-foreground sm:columns-2">
                         {recoveryAuthnCodesConfigBean.generatedRecoveryAuthnCodesList.map((code, index) => (
-                            <li key={index} className="break-inside-avoid py-1 break-all">
+                            <li key={index} className="break-inside-avoid py-1 whitespace-nowrap">
                                 <span className="inline-block min-w-7 text-muted-foreground tabular-nums select-none">{index + 1}:</span>{" "}
                                 {`${code.slice(0, 4)}-${code.slice(4, 8)}-${code.slice(8)}`}
                             </li>
@@ -90,13 +90,13 @@ export default function LoginRecoveryAuthnCodeConfig(props: PageProps<Extract<Kc
 
                                 // The Clipboard API is missing on insecure origins and in some embedded browsers.
                                 if (navigator.clipboard?.writeText === undefined) {
-                                    setCopyState("failed");
+                                    setCopyState(copyWithExecCommand(text) ? "copied" : "failed");
                                     return;
                                 }
 
                                 navigator.clipboard.writeText(text).then(
                                     () => setCopyState("copied"),
-                                    () => setCopyState("failed")
+                                    () => setCopyState(copyWithExecCommand(text) ? "copied" : "failed")
                                 );
                             }}
                         >
@@ -183,4 +183,23 @@ export default function LoginRecoveryAuthnCodeConfig(props: PageProps<Extract<Kc
             </div>
         </Template>
     );
+}
+
+/** Legacy copy fallback for browsers without the Clipboard API. Returns whether copying worked. */
+function copyWithExecCommand(text: string) {
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.setAttribute("readonly", "");
+    textarea.style.position = "fixed";
+    textarea.style.opacity = "0";
+    document.body.appendChild(textarea);
+    textarea.select();
+
+    try {
+        return document.execCommand("copy");
+    } catch {
+        return false;
+    } finally {
+        textarea.remove();
+    }
 }

@@ -62,7 +62,7 @@ export default function SelectOrganization(props: PageProps<Extract<KcContext, {
                                     onClick={onOrganizationClick(alias)}
                                     aria-disabled={isSubmitting || undefined}
                                     aria-busy={isSelected || undefined}
-                                    className="group flex min-h-14 w-full cursor-pointer items-center gap-3 px-4 py-3 text-left transition-colors outline-none hover:bg-accent/60 focus-visible:bg-accent/60 focus-visible:ring-[3px] focus-visible:ring-ring/80 focus-visible:ring-inset disabled:cursor-default disabled:hover:bg-transparent"
+                                    className="group flex min-h-14 w-full cursor-pointer items-center gap-3 px-4 py-3 text-left transition-colors outline-none hover:bg-accent/60 focus-visible:bg-accent/60 focus-visible:ring-[3px] focus-visible:ring-ring/80 focus-visible:ring-inset aria-disabled:cursor-default aria-disabled:hover:bg-transparent"
                                 >
                                     <span
                                         className="flex size-9 shrink-0 items-center justify-center rounded-md border bg-background/60 text-sm font-semibold text-muted-foreground uppercase"
@@ -80,7 +80,7 @@ export default function SelectOrganization(props: PageProps<Extract<KcContext, {
                                         <IconLoader2 className="size-4 shrink-0 animate-spin text-muted-foreground" aria-hidden="true" />
                                     ) : (
                                         <IconChevronRight
-                                            className="size-4 shrink-0 text-muted-foreground transition-transform duration-200 group-hover:translate-x-0.5 group-disabled:opacity-40"
+                                            className="size-4 shrink-0 text-muted-foreground transition-transform duration-200 group-hover:translate-x-0.5 group-aria-disabled:opacity-40"
                                             aria-hidden="true"
                                         />
                                     )}

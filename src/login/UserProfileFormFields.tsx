@@ -65,7 +65,16 @@ export default function UserProfileFormFields(props: UserProfileFormFieldsProps<
                             }}
                         >
                             <div className="grid gap-1.5">
-                                <Label id={`label-${attribute.name}`} htmlFor={attribute.name}>
+                                <Label
+                                    id={`label-${attribute.name}`}
+                                    // Radio/checkbox groups are labelled via aria-labelledby; there is no single control to point at.
+                                    htmlFor={
+                                        attribute.annotations.inputType === "select-radiobuttons" ||
+                                        attribute.annotations.inputType === "multiselect-checkboxes"
+                                            ? undefined
+                                            : attribute.name
+                                    }
+                                >
                                     {advancedMsg(attribute.displayName ?? "")}
                                     {attribute.required && (
                                         <span className="text-red-400" aria-hidden="true">
