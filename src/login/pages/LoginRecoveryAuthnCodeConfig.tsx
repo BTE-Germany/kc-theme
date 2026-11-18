@@ -58,8 +58,9 @@ export default function LoginRecoveryAuthnCodeConfig(props: PageProps<Extract<Kc
                 </Alert>
 
                 <div className="overflow-hidden rounded-lg border bg-card/60">
+                    {/* Scrolls instead of clipping when the user forces very large text. */}
                     {/* The script reads each item's innerText ("1: XXXX-XXXX-XXXX"), so keep each item's content inline (no flex/block children that would add line breaks). */}
-                    <ol id={olRecoveryCodesListId} className="gap-x-4 px-4 py-3 font-mono text-sm text-foreground sm:columns-2">
+                    <ol id={olRecoveryCodesListId} className="overflow-x-auto gap-x-4 px-4 py-3 font-mono text-sm text-foreground sm:columns-2">
                         {recoveryAuthnCodesConfigBean.generatedRecoveryAuthnCodesList.map((code, index) => (
                             <li key={index} className="break-inside-avoid py-1 whitespace-nowrap">
                                 <span className="inline-block min-w-7 text-muted-foreground tabular-nums select-none">{index + 1}:</span>{" "}
@@ -192,8 +193,11 @@ function copyWithExecCommand(text: string) {
     textarea.setAttribute("readonly", "");
     textarea.style.position = "fixed";
     textarea.style.opacity = "0";
+    const previouslyFocused = document.activeElement as HTMLElement | null;
     document.body.appendChild(textarea);
     textarea.select();
+    // Older iOS Safari ignores select() on read-only fields.
+    textarea.setSelectionRange(0, text.length);
 
     try {
         return document.execCommand("copy");
@@ -201,5 +205,6 @@ function copyWithExecCommand(text: string) {
         return false;
     } finally {
         textarea.remove();
+        previouslyFocused?.focus();
     }
 }

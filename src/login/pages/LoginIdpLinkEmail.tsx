@@ -25,22 +25,14 @@ export default function LoginIdpLinkEmail(props: PageProps<Extract<KcContext, { 
                 </p>
                 <p id="instruction2" className="instruction text-muted-foreground">
                     {msg("emailLinkIdp2")} {/* Both links read "Click here"; give each a name that says what it does. */}
-                    <a
-                        href={url.loginAction}
-                        className="kc-link"
-                        aria-label={`${msgStr("emailLinkIdp2")} ${msgStr("doClickHere")} ${msgStr("emailLinkIdp3")}`}
-                    >
+                    <a href={url.loginAction} className="kc-link" aria-label={`${msgStr("doClickHere")} – ${msgStr("emailLinkIdp3")}`}>
                         {msg("doClickHere")}
                     </a>{" "}
                     {msg("emailLinkIdp3")}
                 </p>
                 <p id="instruction3" className="instruction text-muted-foreground">
                     {msg("emailLinkIdp4")}{" "}
-                    <a
-                        href={url.loginAction}
-                        className="kc-link"
-                        aria-label={`${msgStr("emailLinkIdp4")} ${msgStr("doClickHere")} ${msgStr("emailLinkIdp5")}`}
-                    >
+                    <a href={url.loginAction} className="kc-link" aria-label={`${msgStr("doClickHere")} – ${msgStr("emailLinkIdp5")}`}>
                         {msg("doClickHere")}
                     </a>{" "}
                     {msg("emailLinkIdp5")}

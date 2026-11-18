@@ -169,8 +169,15 @@ function GroupLabel(props: {
     return null;
 }
 
-function FieldErrors(props: { attribute: Attribute; displayableErrors: FormFieldError[]; fieldIndex: number | undefined; kcClsx: KcClsx }) {
-    const { attribute, fieldIndex } = props;
+function FieldErrors(props: {
+    attribute: Attribute;
+    displayableErrors: FormFieldError[];
+    fieldIndex: number | undefined;
+    kcClsx: KcClsx;
+    /** Overrides the default id (used for values of multivalued attributes). */
+    id?: string;
+}) {
+    const { attribute, fieldIndex, id } = props;
 
     const displayableErrors = props.displayableErrors.filter(error => error.fieldIndex === fieldIndex);
 
@@ -179,11 +186,7 @@ function FieldErrors(props: { attribute: Attribute; displayableErrors: FormField
     }
 
     return (
-        <p
-            id={`input-error-${attribute.name}${fieldIndex === undefined ? "" : `-${fieldIndex}`}`}
-            className="text-xs leading-snug text-red-400 animate-fade-up"
-            aria-live="polite"
-        >
+        <p id={id ?? `input-error-${attribute.name}`} className="text-xs leading-snug text-red-400 animate-fade-up" aria-live="polite">
             {displayableErrors
                 .filter(error => error.fieldIndex === fieldIndex)
                 .map(({ errorMessage }, i, arr) => (
@@ -251,6 +254,8 @@ function InputTag(props: InputFieldByTypeProps & { fieldIndex: number | undefine
     const { attribute, fieldIndex, kcClsx, dispatchFormAction, valueOrValues, i18n, displayableErrors } = props;
 
     const additionalValueId = useId();
+    // Values of a multivalued attribute get generated error ids, so they can't clash with other attributes' ids.
+    const errorId = fieldIndex === undefined ? `input-error-${attribute.name}` : `${additionalValueId}-error`;
 
     const { advancedMsgStr } = i18n;
 
@@ -283,11 +288,7 @@ function InputTag(props: InputFieldByTypeProps & { fieldIndex: number | undefine
                 className={cn((attribute.name === "password" || attribute.name === "password-confirm") && "pr-11")}
                 aria-invalid={displayableErrors.find(error => error.fieldIndex === fieldIndex) !== undefined}
                 aria-required={attribute.required || undefined}
-                aria-describedby={
-                    displayableErrors.some(error => error.fieldIndex === fieldIndex)
-                        ? `input-error-${attribute.name}${fieldIndex === undefined ? "" : `-${fieldIndex}`}`
-                        : undefined
-                }
+                aria-describedby={displayableErrors.some(error => error.fieldIndex === fieldIndex) ? errorId : undefined}
                 disabled={attribute.readOnly}
                 autoComplete={attribute.autocomplete}
                 placeholder={
@@ -345,7 +346,13 @@ function InputTag(props: InputFieldByTypeProps & { fieldIndex: number | undefine
 
                 return (
                     <>
-                        <FieldErrors attribute={attribute} kcClsx={kcClsx} displayableErrors={displayableErrors} fieldIndex={fieldIndex} />
+                        <FieldErrors
+                            attribute={attribute}
+                            kcClsx={kcClsx}
+                            displayableErrors={displayableErrors}
+                            fieldIndex={fieldIndex}
+                            id={errorId}
+                        />
                         <AddRemoveButtonsMultiValuedAttribute
                             attribute={attribute}
                             values={values}
