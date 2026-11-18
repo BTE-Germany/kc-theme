@@ -85,7 +85,6 @@ export default function LoginOauthGrant(props: PageProps<Extract<KcContext, { pa
                         id="kc-cancel"
                         value={msgStr("doNo")}
                         loading={isSubmitting && submitterName === "cancel"}
-                        disabled={isSubmitting}
                     >
                         {msgStr("doNo")}
                     </Button>
@@ -97,7 +96,6 @@ export default function LoginOauthGrant(props: PageProps<Extract<KcContext, { pa
                         id="kc-login"
                         value={msgStr("doYes")}
                         loading={isSubmitting && submitterName === "accept"}
-                        disabled={isSubmitting}
                     >
                         {msgStr("doYes")}
                     </Button>

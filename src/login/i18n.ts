@@ -22,6 +22,8 @@ const { useI18n, ofTypeI18n } = i18nBuilder
             goBack: "Go back",
             returnToApplication: "Back to application",
             proceed: "Continue",
+            copyFailed:
+                "Copying failed. Please select the codes manually or use Download.",
             alreadyHaveAccount: "Already have an account?",
             acceptTermsText:
                 "I have read and agree to the terms of use and the privacy policy of BuildTheEarth Germany e.V.",
@@ -42,6 +44,8 @@ const { useI18n, ofTypeI18n } = i18nBuilder
             goBack: "Zurück",
             returnToApplication: "Zurück zur Anwendung",
             proceed: "Weiter",
+            copyFailed:
+                "Kopieren fehlgeschlagen. Bitte markiere die Codes manuell oder nutze „Herunterladen“.",
             alreadyHaveAccount: "Du hast bereits ein Konto?",
             acceptTermsText:
                 "Ich habe die Nutzungsbedingungen und die Datenschutzerklärung von BuildTheEarth Germany e.V. gelesen und stimme ihnen zu.",

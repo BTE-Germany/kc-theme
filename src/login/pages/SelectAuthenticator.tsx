@@ -67,7 +67,7 @@ export default function SelectAuthenticator(props: PageProps<Extract<KcContext, 
                                 type="submit"
                                 name="authenticationExecution"
                                 value={authenticationSelection.authExecId}
-                                className="group flex min-h-16 w-full cursor-pointer items-center gap-4 px-4 py-3.5 text-left transition-colors outline-none hover:bg-accent/60 focus-visible:bg-accent/40 focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:ring-inset"
+                                className="group flex min-h-16 w-full cursor-pointer items-center gap-4 px-4 py-3.5 text-left transition-colors outline-none hover:bg-accent/60 focus-visible:bg-accent/40 focus-visible:ring-[3px] focus-visible:ring-ring/80 focus-visible:ring-inset"
                             >
                                 <span
                                     className="flex size-10 shrink-0 items-center justify-center rounded-md bg-primary/15 text-primary-foreground ring-1 ring-primary/30"

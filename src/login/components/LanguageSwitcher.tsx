@@ -27,8 +27,12 @@ export function LanguageSwitcher(props: { i18n: I18n }) {
 
         const onKeyDown = (event: KeyboardEvent) => {
             if (event.key === "Escape") {
+                const hadFocus =
+                    rootRef.current?.contains(document.activeElement) ?? false;
                 setIsOpen(false);
-                buttonRef.current?.focus();
+                if (hadFocus) {
+                    buttonRef.current?.focus();
+                }
             }
         };
 
@@ -36,9 +40,11 @@ export function LanguageSwitcher(props: { i18n: I18n }) {
         document.addEventListener("keydown", onKeyDown);
 
         // Move focus into the menu so keyboard users can pick a language right away.
-        rootRef.current
-            ?.querySelector<HTMLAnchorElement>('[aria-current="true"], a')
-            ?.focus();
+        const root = rootRef.current;
+        (
+            root?.querySelector<HTMLAnchorElement>('a[aria-current="true"]') ??
+            root?.querySelector<HTMLAnchorElement>("a")
+        )?.focus();
 
         return () => {
             document.removeEventListener("pointerdown", onPointerDown);
@@ -70,17 +76,29 @@ export function LanguageSwitcher(props: { i18n: I18n }) {
     };
 
     return (
-        <div ref={rootRef} id="kc-locale" className="relative">
+        <div
+            ref={rootRef}
+            id="kc-locale"
+            className="relative"
+            onBlur={event => {
+                // Close the menu when keyboard focus leaves it.
+                if (
+                    isOpen &&
+                    !event.currentTarget.contains(event.relatedTarget as Node | null)
+                ) {
+                    setIsOpen(false);
+                }
+            }}
+        >
             <button
                 ref={buttonRef}
                 type="button"
                 id="kc-current-locale-link"
                 aria-label={`${msgStr("changeLanguage")}: ${currentLanguage.label}`}
-                aria-haspopup="true"
                 aria-expanded={isOpen}
                 aria-controls={menuId}
                 onClick={() => setIsOpen(open => !open)}
-                className="flex h-9 cursor-pointer items-center gap-1.5 rounded-md px-2.5 text-sm text-muted-foreground transition-colors outline-none hover:bg-accent/60 hover:text-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                className="flex h-9 cursor-pointer items-center gap-1.5 rounded-md px-2.5 text-sm text-muted-foreground transition-colors outline-none hover:bg-accent/60 hover:text-foreground focus-visible:ring-[3px] focus-visible:ring-ring/80"
             >
                 <IconWorld className="size-4" aria-hidden="true" />
                 <span>{currentLanguage.label}</span>

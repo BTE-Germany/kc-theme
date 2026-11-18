@@ -28,7 +28,7 @@ export default function LoginUpdateProfile(props: LoginUpdateProfileProps) {
 
     const [isFormSubmittable, setIsFormSubmittable] = useState(false);
 
-    const { isSubmitting, onSubmit } = useIsSubmitting();
+    const { isSubmitting, isCancelling, onSubmit } = useIsSubmitting();
 
     return (
         <Template
@@ -51,7 +51,7 @@ export default function LoginUpdateProfile(props: LoginUpdateProfileProps) {
 
                 {/* The submit button comes first in the DOM so pressing Enter submits instead of cancelling. */}
                 <div id="kc-form-buttons" className={cn("mt-1 grid gap-3", isAppInitiatedAction && "grid-cols-2")}>
-                    <Button type="submit" size="lg" className="w-full" disabled={!isFormSubmittable} loading={isSubmitting}>
+                    <Button type="submit" size="lg" className="w-full" disabled={!isFormSubmittable} loading={isSubmitting && !isCancelling}>
                         {msgStr("doSubmit")}
                     </Button>
                     {isAppInitiatedAction && (
@@ -61,6 +61,7 @@ export default function LoginUpdateProfile(props: LoginUpdateProfileProps) {
                             className="order-first w-full"
                             type="submit"
                             name="cancel-aia"
+                            loading={isCancelling}
                             value="true"
                             formNoValidate
                         >

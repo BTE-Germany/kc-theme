@@ -62,7 +62,7 @@ export default function SelectOrganization(props: PageProps<Extract<KcContext, {
                                     onClick={onOrganizationClick(alias)}
                                     disabled={isSubmitting}
                                     aria-busy={isSelected || undefined}
-                                    className="group flex min-h-14 w-full cursor-pointer items-center gap-3 px-4 py-3 text-left transition-colors outline-none hover:bg-accent/60 focus-visible:bg-accent/60 focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:ring-inset disabled:cursor-default disabled:hover:bg-transparent"
+                                    className="group flex min-h-14 w-full cursor-pointer items-center gap-3 px-4 py-3 text-left transition-colors outline-none hover:bg-accent/60 focus-visible:bg-accent/60 focus-visible:ring-[3px] focus-visible:ring-ring/80 focus-visible:ring-inset disabled:cursor-default disabled:hover:bg-transparent"
                                 >
                                     <span
                                         className="flex size-9 shrink-0 items-center justify-center rounded-md border bg-background/60 text-sm font-semibold text-muted-foreground uppercase"

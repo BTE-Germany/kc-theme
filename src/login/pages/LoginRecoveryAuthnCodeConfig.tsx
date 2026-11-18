@@ -25,17 +25,18 @@ export default function LoginRecoveryAuthnCodeConfig(props: PageProps<Extract<Kc
     const { isSubmitting, onSubmit } = useIsSubmitting();
 
     const [isConfirmed, setIsConfirmed] = useState(false);
-    const [isCopied, setIsCopied] = useState(false);
+    const [copyState, setCopyState] = useState<"idle" | "copied" | "failed">("idle");
 
+    // Reset the "Copied" feedback after a moment; a failure stays visible until the next attempt.
     useEffect(() => {
-        if (!isCopied) {
+        if (copyState !== "copied") {
             return;
         }
 
-        const timeout = window.setTimeout(() => setIsCopied(false), 2000);
+        const timeout = window.setTimeout(() => setCopyState("idle"), 2000);
 
         return () => window.clearTimeout(timeout);
-    }, [isCopied]);
+    }, [copyState]);
 
     const olRecoveryCodesListId = "kc-recovery-codes-list";
 
@@ -76,20 +77,34 @@ export default function LoginRecoveryAuthnCodeConfig(props: PageProps<Extract<Kc
                             <IconDownload aria-hidden="true" />
                             {msg("recovery-codes-download")}
                         </Button>
-                        {/* The copying itself is done by the script, this only shows feedback. */}
+                        {/* Keycloak's script copies the codes too; copying here as well lets us report whether it worked. */}
                         <Button
                             id="copyRecoveryCodes"
                             type="button"
                             variant="ghost"
-                            className={cn(actionButtonClassName, isCopied && "text-emerald-400 hover:text-emerald-400")}
-                            onClick={() => setIsCopied(true)}
+                            className={cn(actionButtonClassName, copyState === "copied" && "text-emerald-400 hover:text-emerald-400")}
+                            onClick={() => {
+                                const text = recoveryAuthnCodesConfigBean.generatedRecoveryAuthnCodesList
+                                    .map((code, index) => `${index + 1}: ${code.slice(0, 4)}-${code.slice(4, 8)}-${code.slice(8)}`)
+                                    .join("\n");
+
+                                navigator.clipboard
+                                    .writeText(text)
+                                    .then(() => setCopyState("copied"))
+                                    .catch(() => setCopyState("failed"));
+                            }}
                         >
-                            <span key={String(isCopied)} className="animate-pop" aria-hidden="true">
-                                {isCopied ? <IconCheck className="size-[18px]" /> : <IconCopy className="size-[18px]" />}
+                            <span key={copyState} className="animate-pop" aria-hidden="true">
+                                {copyState === "copied" ? <IconCheck className="size-[18px]" /> : <IconCopy className="size-[18px]" />}
                             </span>
-                            <span aria-live="polite">{isCopied ? msg("recovery-codes-copied") : msg("recovery-codes-copy")}</span>
+                            <span aria-live="polite">{copyState === "copied" ? msg("recovery-codes-copied") : msg("recovery-codes-copy")}</span>
                         </Button>
                     </div>
+                    {copyState === "failed" && (
+                        <p role="alert" className="border-t px-4 py-2 text-xs text-red-400 animate-fade-up">
+                            {msg("copyFailed")}
+                        </p>
+                    )}
                 </div>
 
                 <label

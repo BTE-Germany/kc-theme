@@ -4,11 +4,11 @@ import { cn } from "@/lib/utils";
 
 /** Shared look for text-like form controls (input, select, textarea). */
 const inputClassName = cn(
-    "flex w-full min-w-0 rounded-md border border-input bg-input/30 px-3 text-base shadow-xs outline-none md:text-sm",
+    "flex w-full min-w-0 rounded-md border border-input-border bg-input/30 px-3 text-base shadow-xs outline-none md:text-sm",
     "transition-[color,background-color,border-color,box-shadow] duration-200",
     "placeholder:text-muted-foreground/70 selection:bg-primary selection:text-primary-foreground",
-    "hover:border-foreground/20",
-    "focus-visible:border-ring focus-visible:bg-input/50 focus-visible:ring-[3px] focus-visible:ring-ring/40",
+    "hover:border-foreground/60",
+    "focus-visible:border-ring focus-visible:bg-input/50 focus-visible:ring-[3px] focus-visible:ring-ring/60",
     "aria-invalid:border-destructive aria-invalid:ring-destructive/30 aria-invalid:focus-visible:ring-destructive/40",
     "disabled:cursor-not-allowed disabled:opacity-50",
     "file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground"

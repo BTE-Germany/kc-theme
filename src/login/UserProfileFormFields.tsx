@@ -65,7 +65,7 @@ export default function UserProfileFormFields(props: UserProfileFormFieldsProps<
                             }}
                         >
                             <div className="grid gap-1.5">
-                                <Label htmlFor={attribute.name}>
+                                <Label id={`label-${attribute.name}`} htmlFor={attribute.name}>
                                     {advancedMsg(attribute.displayName ?? "")}
                                     {attribute.required && (
                                         <span className="text-red-400" aria-hidden="true">
@@ -265,6 +265,7 @@ function InputTag(props: InputFieldByTypeProps & { fieldIndex: number | undefine
                 })()}
                 className={cn((attribute.name === "password" || attribute.name === "password-confirm") && "pr-11")}
                 aria-invalid={displayableErrors.find(error => error.fieldIndex === fieldIndex) !== undefined}
+                aria-required={attribute.required || undefined}
                 aria-describedby={
                     displayableErrors.some(error => error.fieldIndex === fieldIndex)
                         ? `input-error-${attribute.name}${fieldIndex === undefined ? "" : `-${fieldIndex}`}`
@@ -433,7 +434,12 @@ function InputTagSelects(props: InputFieldByTypeProps) {
     })();
 
     return (
-        <div role={inputType === "radio" ? "radiogroup" : "group"} className="grid gap-2">
+        <div
+            role={inputType === "radio" ? "radiogroup" : "group"}
+            aria-labelledby={`label-${attribute.name}`}
+            aria-required={attribute.required || undefined}
+            className="grid gap-2"
+        >
             {options.map(option => (
                 <label
                     key={option}
@@ -502,6 +508,7 @@ function TextareaTag(props: InputFieldByTypeProps) {
             id={attribute.name}
             name={attribute.name}
             aria-invalid={displayableErrors.length !== 0}
+            aria-required={attribute.required || undefined}
             disabled={attribute.readOnly}
             cols={attribute.annotations.inputTypeCols === undefined ? undefined : parseInt(`${attribute.annotations.inputTypeCols}`)}
             rows={attribute.annotations.inputTypeRows === undefined ? undefined : parseInt(`${attribute.annotations.inputTypeRows}`)}
@@ -535,6 +542,7 @@ function SelectTag(props: InputFieldByTypeProps) {
             id={attribute.name}
             name={attribute.name}
             aria-invalid={displayableErrors.length !== 0}
+            aria-required={attribute.required || undefined}
             disabled={attribute.readOnly}
             multiple={isMultiple}
             size={attribute.annotations.inputTypeSize === undefined ? undefined : parseInt(`${attribute.annotations.inputTypeSize}`)}

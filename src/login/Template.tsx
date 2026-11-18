@@ -58,7 +58,10 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
 
     const { isReadyToRender } = useInitialize({ kcContext, doUseDefaultCss });
 
-    const backgroundImage = useBackgroundImage();
+    // Pages that redirect immediately never show the photo, so don't download it there.
+    const backgroundImage = useBackgroundImage({
+        isEnabled: kcContext.pageId !== "saml-post-form.ftl" && kcContext.pageId !== "frontchannel-logout.ftl"
+    });
 
     if (!isReadyToRender) {
         return null;
@@ -83,7 +86,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                 <header className="flex items-center justify-between gap-4 pt-5 sm:pt-8" aria-label={msgStr("mainNavigation")}>
                     <a
                         href={url.loginUrl}
-                        className="group flex items-center gap-3 rounded-md outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                        className="group flex items-center gap-3 rounded-md outline-none focus-visible:ring-[3px] focus-visible:ring-ring/80"
                     >
                         <img
                             src={LOGO_URL}
@@ -123,7 +126,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                                     href={url.loginRestartFlowUrl}
                                     title={msgStr("restartLoginTooltip")}
                                     aria-label={msgStr("restartLoginTooltip")}
-                                    className="group flex size-9 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors outline-none hover:bg-accent hover:text-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50"
+                                    className="group flex size-9 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors outline-none hover:bg-accent hover:text-foreground focus-visible:ring-[3px] focus-visible:ring-ring/80"
                                 >
                                     <IconRefresh className="size-4 transition-transform duration-500 group-hover:-rotate-180" aria-hidden="true" />
                                 </a>
@@ -146,7 +149,12 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                         <div className={cn(displayRequiredFields ? "mt-4" : "mt-8")}>{children}</div>
 
                         {auth !== undefined && auth.showTryAnotherWayLink && (
-                            <form id="kc-select-try-another-way-form" action={url.loginAction} method="post" className="mt-4 text-center">
+                            <form
+                                id="kc-select-try-another-way-form"
+                                action={url.loginAction}
+                                method="post"
+                                className="mt-4 text-center lg:text-left"
+                            >
                                 <input type="hidden" name="tryAnotherWay" value="on" />
                                 <button
                                     type="submit"
@@ -161,7 +169,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                         {socialProvidersNode}
 
                         {displayInfo && (
-                            <div id="kc-info" className="mt-8 text-center text-sm text-muted-foreground">
+                            <div id="kc-info" className="mt-8 text-center text-sm text-muted-foreground lg:text-left">
                                 {infoNode}
                             </div>
                         )}

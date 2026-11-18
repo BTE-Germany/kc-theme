@@ -19,7 +19,7 @@ export default function LoginConfigTotp(props: PageProps<Extract<KcContext, { pa
 
     const { msg, msgStr, advancedMsg } = i18n;
 
-    const { isSubmitting, onSubmit } = useIsSubmitting();
+    const { isSubmitting, isCancelling, onSubmit } = useIsSubmitting();
 
     const hasTotpError = messagesPerField.existsError("totp");
     const hasUserLabelError = messagesPerField.existsError("userLabel");
@@ -172,7 +172,7 @@ export default function LoginConfigTotp(props: PageProps<Extract<KcContext, { pa
                         id="saveTOTPBtn"
                         size="lg"
                         className={cn("w-full", isAppInitiatedAction && "order-last")}
-                        loading={isSubmitting}
+                        loading={isSubmitting && !isCancelling}
                     >
                         {msgStr("doSubmit")}
                     </Button>
@@ -181,6 +181,7 @@ export default function LoginConfigTotp(props: PageProps<Extract<KcContext, { pa
                             type="submit"
                             id="cancelTOTPBtn"
                             name="cancel-aia"
+                            loading={isCancelling}
                             value="true"
                             variant="outline"
                             size="lg"

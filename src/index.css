@@ -23,6 +23,7 @@
     --destructive-foreground: oklch(0.9934 0.0032 17.2118);
     --border: oklch(0.9037 0 0);
     --input: oklch(0.9731 0 0);
+    --input-border: oklch(0.6 0 0);
     --ring: oklch(0.8348 0.1302 160.908);
     --chart-1: oklch(0.8348 0.1302 160.908);
     --chart-2: oklch(0.6231 0.188 259.8145);
@@ -82,6 +83,8 @@
     --destructive-foreground: oklch(0.9368 0.0045 34.3092);
     --border: oklch(0.2809 0 0);
     --input: oklch(0.2603 0 0);
+    /* Outline of form controls; needs 3:1 contrast against the background (WCAG 1.4.11). */
+    --input-border: oklch(0.5 0 0);
     --ring: oklch(0.4986 0.1601 259.8087);
     --chart-1: oklch(0.8003 0.1821 151.711);
     --chart-2: oklch(0.7137 0.1434 254.624);
@@ -139,6 +142,7 @@
     --color-destructive-foreground: var(--destructive-foreground);
     --color-border: var(--border);
     --color-input: var(--input);
+    --color-input-border: var(--input-border);
     --color-ring: var(--ring);
     --color-chart-1: var(--chart-1);
     --color-chart-2: var(--chart-2);
@@ -191,6 +195,10 @@ body {
     body {
         @apply bg-background text-foreground;
     }
+    /* Fieldsets default to min-width: min-content, which lets long labels overflow narrow screens. */
+    fieldset {
+        min-width: 0;
+    }
     ::selection {
         @apply bg-primary/30 text-foreground;
     }
@@ -242,7 +250,7 @@ body {
         transform: scale(1.12) translate3d(0, 0, 0);
     }
     to {
-        transform: scale(1) translate3d(-1.5%, -1%, 0);
+        transform: scale(1.04) translate3d(-1.5%, -1%, 0);
     }
 }
 
@@ -277,39 +285,39 @@ body {
 }
 
 @utility animate-ken-burns {
-    animation: kc-ken-burns 30s ease-out both;
-}
-
-/* Children of a .kc-stagger container fade in one after another. */
-.kc-stagger > * {
-    animation: kc-fade-up 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-.kc-stagger > *:nth-child(1) {
-    animation-delay: 40ms;
-}
-.kc-stagger > *:nth-child(2) {
-    animation-delay: 90ms;
-}
-.kc-stagger > *:nth-child(3) {
-    animation-delay: 140ms;
-}
-.kc-stagger > *:nth-child(4) {
-    animation-delay: 190ms;
-}
-.kc-stagger > *:nth-child(5) {
-    animation-delay: 240ms;
-}
-.kc-stagger > *:nth-child(6) {
-    animation-delay: 290ms;
-}
-.kc-stagger > *:nth-child(n + 7) {
-    animation-delay: 340ms;
+    animation: kc-ken-burns 20s ease-out both;
 }
 
 @layer components {
+    /* Children of a .kc-stagger container fade in one after another. */
+    .kc-stagger > * {
+        animation: kc-fade-up 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    .kc-stagger > *:nth-child(1) {
+        animation-delay: 40ms;
+    }
+    .kc-stagger > *:nth-child(2) {
+        animation-delay: 90ms;
+    }
+    .kc-stagger > *:nth-child(3) {
+        animation-delay: 140ms;
+    }
+    .kc-stagger > *:nth-child(4) {
+        animation-delay: 190ms;
+    }
+    .kc-stagger > *:nth-child(5) {
+        animation-delay: 240ms;
+    }
+    .kc-stagger > *:nth-child(6) {
+        animation-delay: 290ms;
+    }
+    .kc-stagger > *:nth-child(n + 7) {
+        animation-delay: 340ms;
+    }
+
     /* Animated underline for inline text links. */
     .kc-link {
-        @apply font-medium text-foreground underline decoration-transparent decoration-1 underline-offset-4 transition-colors duration-200 hover:decoration-current focus-visible:decoration-current focus-visible:outline-none;
+        @apply font-medium text-foreground underline decoration-transparent decoration-1 underline-offset-4 transition-colors duration-200 hover:decoration-current focus-visible:rounded-xs focus-visible:decoration-current focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none;
     }
 
     /* Rich text coming from Keycloak messages (may contain links or lists). */

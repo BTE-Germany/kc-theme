@@ -14,7 +14,14 @@ type CmsResponse = {
 
 /** Picks an image width bucket so the CMS can serve (and cache) a reasonably sized file. */
 function getImageWidth() {
-    const neededWidth = window.innerWidth * Math.min(window.devicePixelRatio || 1, 2);
+    // Below the lg breakpoint the photo is only a blurred, faint backdrop, so a small file is enough.
+    if (window.innerWidth < 1024) {
+        return 640;
+    }
+
+    // On desktop the photo covers roughly half of the viewport.
+    const neededWidth =
+        (window.innerWidth / 2) * Math.min(window.devicePixelRatio || 1, 2);
 
     return [1280, 1920, 2560].find(width => width >= neededWidth) ?? 2560;
 }
@@ -57,10 +64,16 @@ async function fetchRandomImage(signal: AbortSignal): Promise<BackgroundImage> {
  * Returns `undefined` until the image is fully downloaded, so it can be faded in without flashing.
  * Falls back to the image bundled with the theme if the CMS is unreachable.
  */
-export function useBackgroundImage() {
+export function useBackgroundImage(params: { isEnabled: boolean }) {
+    const { isEnabled } = params;
+
     const [image, setImage] = useState<BackgroundImage | undefined>(undefined);
 
     useEffect(() => {
+        if (!isEnabled) {
+            return;
+        }
+
         let isCancelled = false;
         // Give up on the CMS after a few seconds and use the bundled image instead.
         const controller = new AbortController();
@@ -89,7 +102,7 @@ export function useBackgroundImage() {
             window.clearTimeout(timeout);
             controller.abort();
         };
-    }, []);
+    }, [isEnabled]);
 
     return image;
 }

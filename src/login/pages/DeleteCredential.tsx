@@ -13,7 +13,7 @@ export default function DeleteCredential(props: PageProps<Extract<KcContext, { p
 
     const { url, credentialLabel } = kcContext;
 
-    const { isSubmitting, onSubmit } = useIsSubmitting();
+    const { isSubmitting, isCancelling, onSubmit } = useIsSubmitting();
 
     return (
         <Template
@@ -38,7 +38,15 @@ export default function DeleteCredential(props: PageProps<Extract<KcContext, { p
                 <form action={url.loginAction} method="POST" onSubmit={onSubmit}>
                     {/* The delete button comes first in the DOM so it is the form's default action; on wider screens Cancel sits on the left. */}
                     <div id="kc-form-buttons" className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                        <Button type="submit" size="lg" variant="destructive" className="w-full" name="accept" id="kc-accept" loading={isSubmitting}>
+                        <Button
+                            type="submit"
+                            size="lg"
+                            variant="destructive"
+                            className="w-full"
+                            name="accept"
+                            id="kc-accept"
+                            loading={isSubmitting && !isCancelling}
+                        >
                             {msgStr("doConfirmDelete")}
                         </Button>
                         <Button
@@ -47,6 +55,7 @@ export default function DeleteCredential(props: PageProps<Extract<KcContext, { p
                             variant="outline"
                             className="w-full sm:order-first"
                             name="cancel-aia"
+                            loading={isCancelling}
                             id="kc-decline"
                             value="true"
                         >

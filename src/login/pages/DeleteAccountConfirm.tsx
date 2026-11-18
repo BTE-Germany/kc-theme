@@ -15,7 +15,7 @@ export default function DeleteAccountConfirm(props: PageProps<Extract<KcContext,
 
     const { msg, msgStr } = i18n;
 
-    const { isSubmitting, onSubmit } = useIsSubmitting();
+    const { isSubmitting, isCancelling, onSubmit } = useIsSubmitting();
 
     const consequences = [
         { icon: IconLogout, text: msg("loggingOutImmediately") },
@@ -52,15 +52,26 @@ export default function DeleteAccountConfirm(props: PageProps<Extract<KcContext,
                     </ul>
                 </div>
 
-                <p className="delete-account-text text-sm text-pretty text-muted-foreground">{msg("finalDeletionConfirmation")}</p>
+                {/* This message tells the user to click "Cancel", which only exists for app-initiated actions. */}
+                {triggered_from_aia && (
+                    <p className="delete-account-text text-sm text-pretty text-muted-foreground">{msg("finalDeletionConfirmation")}</p>
+                )}
 
                 {/* The delete button comes first in the DOM so it is the form's default action; on wider screens Cancel sits on the left. */}
                 <div id="kc-form-buttons" className={cn("mt-1 grid grid-cols-1 gap-3", triggered_from_aia && "sm:grid-cols-2")}>
-                    <Button type="submit" size="lg" variant="destructive" className="w-full" loading={isSubmitting}>
+                    <Button type="submit" size="lg" variant="destructive" className="w-full" loading={isSubmitting && !isCancelling}>
                         {msgStr("doConfirmDelete")}
                     </Button>
                     {triggered_from_aia && (
-                        <Button type="submit" size="lg" variant="outline" className="w-full sm:order-first" name="cancel-aia" value="true">
+                        <Button
+                            type="submit"
+                            size="lg"
+                            variant="outline"
+                            className="w-full sm:order-first"
+                            name="cancel-aia"
+                            loading={isCancelling}
+                            value="true"
+                        >
                             {msgStr("doCancel")}
                         </Button>
                     )}

@@ -14,7 +14,7 @@ export default function Terms(props: PageProps<Extract<KcContext, { pageId: "ter
 
     const { url } = kcContext;
 
-    const { isSubmitting, onSubmit } = useIsSubmitting();
+    const { isSubmitting, isCancelling, onSubmit } = useIsSubmitting();
 
     // Keycloak ships an empty "termsText" until the realm defines one; show the built-in placeholder instead of an empty card.
     const hasTermsText = msgStr("termsText").trim() !== "";
@@ -38,7 +38,7 @@ export default function Terms(props: PageProps<Extract<KcContext, { pageId: "ter
                     className={cn(
                         "kc-rich-text max-h-[min(55vh,26rem)] overflow-y-auto rounded-lg border bg-card/60 px-4 pt-4 pb-10 sm:px-5 sm:pt-5",
                         "text-sm leading-relaxed text-pretty break-words text-muted-foreground outline-none transition-[box-shadow]",
-                        "focus-visible:ring-[3px] focus-visible:ring-ring/50",
+                        "focus-visible:ring-[3px] focus-visible:ring-ring/80",
                         "[scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
                         "[mask-image:linear-gradient(to_bottom,black_calc(100%-2.5rem),transparent)]",
                         "[&_h1]:mb-2 [&_h1]:text-base [&_h1]:font-semibold [&_h1]:text-foreground",
@@ -53,7 +53,7 @@ export default function Terms(props: PageProps<Extract<KcContext, { pageId: "ter
                 <form action={url.loginAction} method="POST" onSubmit={onSubmit}>
                     {/* Accept comes first in the DOM so it stays the default (Enter) action; on wider screens it sits on the right. */}
                     <div id="kc-form-buttons" className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                        <Button type="submit" size="lg" className="w-full" name="accept" id="kc-accept" loading={isSubmitting}>
+                        <Button type="submit" size="lg" className="w-full" name="accept" id="kc-accept" loading={isSubmitting && !isCancelling}>
                             {msgStr("doAccept")}
                         </Button>
                         <Button
@@ -62,6 +62,7 @@ export default function Terms(props: PageProps<Extract<KcContext, { pageId: "ter
                             variant="outline"
                             className="w-full sm:order-first"
                             name="cancel"
+                            loading={isCancelling}
                             id="kc-decline"
                             value="true"
                         >

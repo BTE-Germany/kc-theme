@@ -18,7 +18,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
 
     const { url, messagesPerField, isAppInitiatedAction } = kcContext;
 
-    const { isSubmitting, onSubmit } = useIsSubmitting();
+    const { isSubmitting, isCancelling, onSubmit } = useIsSubmitting();
 
     const hasError = messagesPerField.existsError("password", "password-confirm");
 
@@ -69,7 +69,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
 
                 {/* Submit comes first in the DOM so that pressing Enter submits instead of cancelling; Cancel is moved left visually. */}
                 <div id="kc-form-buttons" className={cn("mt-1 grid gap-3", isAppInitiatedAction && "grid-cols-2")}>
-                    <Button type="submit" size="lg" className="w-full" loading={isSubmitting}>
+                    <Button type="submit" size="lg" className="w-full" loading={isSubmitting && !isCancelling}>
                         {msgStr("doSubmit")}
                     </Button>
                     {isAppInitiatedAction && (
@@ -79,6 +79,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                             className="order-first w-full"
                             type="submit"
                             name="cancel-aia"
+                            loading={isCancelling}
                             value="true"
                             formNoValidate
                         >

@@ -44,7 +44,6 @@ export default function LinkIdpAction(props: PageProps<Extract<KcContext, { page
                     id="kc-cancel"
                     value={msgStr("doCancel")}
                     loading={isSubmitting && submitterName === "cancel-aia"}
-                    disabled={isSubmitting}
                 >
                     {msgStr("doCancel")}
                 </Button>
@@ -56,7 +55,6 @@ export default function LinkIdpAction(props: PageProps<Extract<KcContext, { page
                     id="kc-continue"
                     value={msgStr("doContinue")}
                     loading={isSubmitting && submitterName === "continue"}
-                    disabled={isSubmitting}
                 >
                     {msgStr("doContinue")}
                 </Button>

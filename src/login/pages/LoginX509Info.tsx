@@ -61,7 +61,6 @@ export default function LoginX509Info(props: PageProps<Extract<KcContext, { page
                             id="kc-cancel"
                             value={msgStr("doIgnore")}
                             loading={isSubmitting && submitterName === "cancel"}
-                            disabled={isSubmitting}
                         >
                             {msgStr("doIgnore")}
                         </Button>
@@ -74,7 +73,6 @@ export default function LoginX509Info(props: PageProps<Extract<KcContext, { page
                         id="kc-login"
                         value={msgStr("doContinue")}
                         loading={isSubmitting && submitterName === "login"}
-                        disabled={isSubmitting}
                     >
                         {msgStr("doContinue")}
                     </Button>

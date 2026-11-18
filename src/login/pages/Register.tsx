@@ -88,7 +88,7 @@ export default function Register(props: RegisterProps) {
                 )}
 
                 {recaptchaRequired && (recaptchaVisible || recaptchaAction === undefined) && (
-                    <div className="flex justify-center overflow-hidden rounded-lg">
+                    <div className="flex justify-center">
                         {/* Cloudflare Turnstile and Google reCAPTCHA both pick up their container by class name. */}
                         <div
                             className="cf-turnstile g-recaptcha"
@@ -96,6 +96,7 @@ export default function Register(props: RegisterProps) {
                             data-action={recaptchaAction}
                             data-language={currentLanguage.languageTag}
                             data-theme="dark"
+                            data-size="compact"
                         />
                     </div>
                 )}
@@ -163,7 +164,7 @@ function TermsAcceptance(props: {
                 <span className="grid gap-1.5">
                     <span className="text-sm leading-none font-medium">{msg("termsTitle")}</span>
                     <span className="kc-rich-text text-sm text-muted-foreground">
-                        {msgStr("termsText") !== "" ? msg("termsText") : msg("acceptTermsText")}
+                        {msgStr("termsText").trim() !== "" ? msg("termsText") : msg("acceptTermsText")}
                     </span>
                 </span>
             </label>

@@ -26,7 +26,7 @@ export default function LoginPageExpired(props: PageProps<Extract<KcContext, { p
                     <Button asChild size="lg" className="group w-full">
                         <a id="loginRestartLink" href={url.loginRestartFlowUrl}>
                             <IconRefresh className="transition-transform duration-500 group-hover:-rotate-180" aria-hidden="true" />
-                            {msg("doClickHere")}
+                            {msg("restartLoginTooltip")}
                         </a>
                     </Button>
                 </div>
@@ -34,7 +34,7 @@ export default function LoginPageExpired(props: PageProps<Extract<KcContext, { p
                     <p className="text-sm text-muted-foreground">{msg("pageExpiredMsg2")}</p>
                     <Button asChild size="lg" variant="outline" className="group w-full">
                         <a id="loginContinueLink" href={url.loginAction}>
-                            {msg("doClickHere")}
+                            {msg("doContinue")}
                             <IconArrowRight className="transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden="true" />
                         </a>
                     </Button>

@@ -34,7 +34,7 @@ export default function LoginResetOtp(props: PageProps<Extract<KcContext, { page
                             <label
                                 key={otpCredential.id}
                                 htmlFor={`kc-otp-credential-${index}`}
-                                className="group relative flex min-h-12 cursor-pointer items-center gap-3 px-4 py-3 transition-colors hover:bg-accent/60 has-checked:bg-accent/40 has-focus-visible:ring-[3px] has-focus-visible:ring-ring/50 has-focus-visible:ring-inset"
+                                className="group relative flex min-h-12 cursor-pointer items-center gap-3 px-4 py-3 transition-colors hover:bg-accent/60 has-checked:bg-accent/40 has-focus-visible:ring-[3px] has-focus-visible:ring-ring/80 has-focus-visible:ring-inset"
                             >
                                 <input
                                     id={`kc-otp-credential-${index}`}
@@ -48,7 +48,7 @@ export default function LoginResetOtp(props: PageProps<Extract<KcContext, { page
                                     className="size-5 shrink-0 text-muted-foreground transition-colors group-has-checked:text-foreground"
                                     aria-hidden="true"
                                 />
-                                <span className="min-w-0 flex-1 truncate text-sm font-medium">{otpCredential.userLabel}</span>
+                                <span className="min-w-0 flex-1 text-sm font-medium break-words">{otpCredential.userLabel}</span>
                                 <span
                                     className="flex size-[18px] shrink-0 items-center justify-center rounded-full border border-input transition-colors group-has-checked:border-primary"
                                     aria-hidden="true"
