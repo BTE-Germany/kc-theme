@@ -2,7 +2,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { keycloakify } from "keycloakify/vite-plugin";
 import tailwindcss from "@tailwindcss/vite";
-import path from "path"
+import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -11,19 +11,13 @@ export default defineConfig({
         keycloakify({
             accountThemeImplementation: "none"
         }),
-        tailwindcss(),
-        // visualizer({ open: true }) // Deaktiviert für schnelleren Build
+        tailwindcss()
     ],
     resolve: {
         alias: {
             "@": path.resolve(import.meta.dirname, "./src"),
-            '@tabler/icons-react': '@tabler/icons-react/dist/esm/icons/index.mjs',
-        },
-    },
-    server: {
-        hmr: {
-            overlay: true
+            // Import Tabler icons from the ESM entry so unused icons are tree-shaken in dev and build.
+            "@tabler/icons-react": "@tabler/icons-react/dist/esm/icons/index.mjs"
         }
-    },
-    logLevel: 'info'
+    }
 });
