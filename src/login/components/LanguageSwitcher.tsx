@@ -81,10 +81,12 @@ export function LanguageSwitcher(props: { i18n: I18n }) {
             id="kc-locale"
             className="relative"
             onBlur={event => {
-                // Close the menu when keyboard focus leaves it.
+                // Close the menu when keyboard focus moves elsewhere. relatedTarget is null for mouse clicks in Safari
+                // (it doesn't focus clicked links); real outside clicks are handled by the pointerdown listener.
                 if (
                     isOpen &&
-                    !event.currentTarget.contains(event.relatedTarget as Node | null)
+                    event.relatedTarget !== null &&
+                    !event.currentTarget.contains(event.relatedTarget)
                 ) {
                     setIsOpen(false);
                 }
@@ -127,7 +129,7 @@ export function LanguageSwitcher(props: { i18n: I18n }) {
                                     lang={languageTag}
                                     aria-current={isCurrent || undefined}
                                     className={cn(
-                                        "flex items-center justify-between gap-3 rounded-md px-2.5 py-2 text-sm outline-none transition-colors hover:bg-accent focus-visible:bg-accent",
+                                        "flex items-center justify-between gap-3 rounded-md px-2.5 py-2 text-sm outline-none transition-colors hover:bg-accent focus-visible:bg-accent focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset",
                                         isCurrent
                                             ? "text-foreground"
                                             : "text-popover-foreground"

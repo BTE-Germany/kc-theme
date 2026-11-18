@@ -53,10 +53,10 @@ export default function LoginOtp(props: PageProps<Extract<KcContext, { pageId: "
                                     />
                                     <span className="min-w-0 flex-1 text-sm font-medium break-words">{otpCredential.userLabel}</span>
                                     <span
-                                        className="flex size-[18px] shrink-0 items-center justify-center rounded-full border border-input transition-colors group-has-checked:border-primary"
+                                        className="flex size-[18px] shrink-0 items-center justify-center rounded-full border border-input-border transition-colors group-has-checked:border-foreground"
                                         aria-hidden="true"
                                     >
-                                        <span className="size-2 scale-0 rounded-full bg-primary transition-transform duration-200 group-has-checked:scale-100" />
+                                        <span className="size-2 scale-0 rounded-full bg-foreground transition-transform duration-200 group-has-checked:scale-100" />
                                     </span>
                                 </label>
                             ))}

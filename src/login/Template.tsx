@@ -83,7 +83,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
             </div>
 
             <div className="relative z-10 flex min-h-dvh w-full flex-col px-5 sm:px-10 lg:w-1/2 lg:max-w-[720px] lg:shrink-0 lg:border-r lg:border-border/60 lg:bg-background lg:px-14 xl:px-20">
-                <header className="flex items-center justify-between gap-4 pt-5 sm:pt-8" aria-label={msgStr("mainNavigation")}>
+                <header className="flex items-center justify-between gap-4 pt-5 sm:pt-8">
                     <a
                         href={url.loginUrl}
                         className="group flex items-center gap-3 rounded-md outline-none focus-visible:ring-[3px] focus-visible:ring-ring/80"

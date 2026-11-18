@@ -4,3 +4,5 @@ node_modules/
 /public/keycloakify-dev-resources/
 /.vscode/
 /.yarn_home/
+/src/kc.gen.tsx
+/src/assets/fonts/

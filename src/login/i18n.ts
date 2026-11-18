@@ -22,12 +22,12 @@ const { useI18n, ofTypeI18n } = i18nBuilder
             goBack: "Go back",
             returnToApplication: "Back to application",
             proceed: "Continue",
+            requiredField: "required",
             copyFailed:
                 "Copying failed. Please select the codes manually or use Download.",
             alreadyHaveAccount: "Already have an account?",
             acceptTermsText:
                 "I have read and agree to the terms of use and the privacy policy of BuildTheEarth Germany e.V.",
-            mainNavigation: "Language and account",
             changeLanguage: "Change language"
         },
         de: {
@@ -44,12 +44,12 @@ const { useI18n, ofTypeI18n } = i18nBuilder
             goBack: "Zurück",
             returnToApplication: "Zurück zur Anwendung",
             proceed: "Weiter",
+            requiredField: "Pflichtfeld",
             copyFailed:
                 "Kopieren fehlgeschlagen. Bitte markiere die Codes manuell oder nutze „Herunterladen“.",
             alreadyHaveAccount: "Du hast bereits ein Konto?",
             acceptTermsText:
                 "Ich habe die Nutzungsbedingungen und die Datenschutzerklärung von BuildTheEarth Germany e.V. gelesen und stimme ihnen zu.",
-            mainNavigation: "Sprache und Konto",
             changeLanguage: "Sprache ändern"
         }
     })

@@ -22,7 +22,7 @@ export default function LoginRecoveryAuthnCodeConfig(props: PageProps<Extract<Kc
 
     const { msg, msgStr } = i18n;
 
-    const { isSubmitting, onSubmit } = useIsSubmitting();
+    const { isSubmitting, isCancelling, onSubmit } = useIsSubmitting();
 
     const [isConfirmed, setIsConfirmed] = useState(false);
     const [copyState, setCopyState] = useState<"idle" | "copied" | "failed">("idle");
@@ -77,9 +77,9 @@ export default function LoginRecoveryAuthnCodeConfig(props: PageProps<Extract<Kc
                             <IconDownload aria-hidden="true" />
                             {msg("recovery-codes-download")}
                         </Button>
-                        {/* Keycloak's script copies the codes too; copying here as well lets us report whether it worked. */}
+                        {/* Not "copyRecoveryCodes": Keycloak's script would bind its own copy handler, which can't report failures. */}
                         <Button
-                            id="copyRecoveryCodes"
+                            id="copyRecoveryCodesButton"
                             type="button"
                             variant="ghost"
                             className={cn(actionButtonClassName, copyState === "copied" && "text-emerald-400 hover:text-emerald-400")}
@@ -88,10 +88,16 @@ export default function LoginRecoveryAuthnCodeConfig(props: PageProps<Extract<Kc
                                     .map((code, index) => `${index + 1}: ${code.slice(0, 4)}-${code.slice(4, 8)}-${code.slice(8)}`)
                                     .join("\n");
 
-                                navigator.clipboard
-                                    .writeText(text)
-                                    .then(() => setCopyState("copied"))
-                                    .catch(() => setCopyState("failed"));
+                                // The Clipboard API is missing on insecure origins and in some embedded browsers.
+                                if (navigator.clipboard?.writeText === undefined) {
+                                    setCopyState("failed");
+                                    return;
+                                }
+
+                                navigator.clipboard.writeText(text).then(
+                                    () => setCopyState("copied"),
+                                    () => setCopyState("failed")
+                                );
                             }}
                         >
                             <span key={copyState} className="animate-pop" aria-hidden="true">
@@ -154,7 +160,7 @@ export default function LoginRecoveryAuthnCodeConfig(props: PageProps<Extract<Kc
                             size="lg"
                             className="w-full sm:order-last"
                             disabled={!isConfirmed}
-                            loading={isSubmitting}
+                            loading={isSubmitting && !isCancelling}
                         >
                             {msgStr("recovery-codes-action-complete")}
                         </Button>
@@ -163,6 +169,7 @@ export default function LoginRecoveryAuthnCodeConfig(props: PageProps<Extract<Kc
                                 type="submit"
                                 id="cancelRecoveryAuthnCodesBtn"
                                 name="cancel-aia"
+                                loading={isCancelling}
                                 value="true"
                                 variant="outline"
                                 size="lg"

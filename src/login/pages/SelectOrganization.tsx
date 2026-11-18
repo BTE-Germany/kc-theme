@@ -21,7 +21,7 @@ export default function SelectOrganization(props: PageProps<Extract<KcContext, {
     const onOrganizationClick = (organizationAlias: string) => (event: MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
 
-        if (!organizationInputRef.current || !formRef.current) {
+        if (isSubmitting || !organizationInputRef.current || !formRef.current) {
             return;
         }
 
@@ -60,7 +60,7 @@ export default function SelectOrganization(props: PageProps<Extract<KcContext, {
                                     id={`organization-${alias}`}
                                     type="button"
                                     onClick={onOrganizationClick(alias)}
-                                    disabled={isSubmitting}
+                                    aria-disabled={isSubmitting || undefined}
                                     aria-busy={isSelected || undefined}
                                     className="group flex min-h-14 w-full cursor-pointer items-center gap-3 px-4 py-3 text-left transition-colors outline-none hover:bg-accent/60 focus-visible:bg-accent/60 focus-visible:ring-[3px] focus-visible:ring-ring/80 focus-visible:ring-inset disabled:cursor-default disabled:hover:bg-transparent"
                                 >
@@ -71,9 +71,9 @@ export default function SelectOrganization(props: PageProps<Extract<KcContext, {
                                         {(name ?? alias).charAt(0)}
                                     </span>
                                     <span className="min-w-0 flex-1">
-                                        <span className="block truncate text-sm font-medium">{name ?? alias}</span>
+                                        <span className="block text-sm font-medium break-words">{name ?? alias}</span>
                                         {name !== undefined && (
-                                            <span className="block truncate font-mono text-xs text-muted-foreground">{alias}</span>
+                                            <span className="block font-mono text-xs break-all text-muted-foreground">{alias}</span>
                                         )}
                                     </span>
                                     {isSelected ? (

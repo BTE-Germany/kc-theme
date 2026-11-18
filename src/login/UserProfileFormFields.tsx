@@ -21,7 +21,7 @@ import { PasswordRevealWrapper } from "./components/PasswordInput";
 export default function UserProfileFormFields(props: UserProfileFormFieldsProps<KcContext, I18n>) {
     const { kcContext, i18n, kcClsx, onIsFormSubmittableValueChange, doMakeUserConfirmPassword, BeforeField, AfterField } = props;
 
-    const { advancedMsg } = i18n;
+    const { advancedMsg, msgStr } = i18n;
 
     const {
         formState: { formFieldStates, isFormSubmittable },
@@ -71,6 +71,10 @@ export default function UserProfileFormFields(props: UserProfileFormFieldsProps<
                                         <span className="text-red-400" aria-hidden="true">
                                             *
                                         </span>
+                                    )}
+                                    {/* aria-required has no effect on role="group", so announce it in the label instead. */}
+                                    {attribute.required && attribute.annotations.inputType === "multiselect-checkboxes" && (
+                                        <span className="sr-only">({msgStr("requiredField")})</span>
                                     )}
                                 </Label>
                                 {attribute.annotations.inputHelperTextBefore !== undefined && (
@@ -251,7 +255,9 @@ function InputTag(props: InputFieldByTypeProps & { fieldIndex: number | undefine
 
                     return inputType ?? "text";
                 })()}
-                id={attribute.name}
+                // Additional values of a multivalued attribute need their own id; they are labelled via aria-labelledby.
+                id={fieldIndex === undefined || fieldIndex === 0 ? attribute.name : `${attribute.name}-${fieldIndex}`}
+                aria-labelledby={fieldIndex !== undefined && fieldIndex > 0 ? `label-${attribute.name}` : undefined}
                 name={attribute.name}
                 value={(() => {
                     if (fieldIndex !== undefined) {
@@ -437,7 +443,8 @@ function InputTagSelects(props: InputFieldByTypeProps) {
         <div
             role={inputType === "radio" ? "radiogroup" : "group"}
             aria-labelledby={`label-${attribute.name}`}
-            aria-required={attribute.required || undefined}
+            aria-required={inputType === "radio" ? attribute.required || undefined : undefined}
+            aria-describedby={props.displayableErrors.length !== 0 ? `input-error-${attribute.name}` : undefined}
             className="grid gap-2"
         >
             {options.map(option => (
@@ -445,7 +452,7 @@ function InputTagSelects(props: InputFieldByTypeProps) {
                     key={option}
                     htmlFor={`${attribute.name}-${option}`}
                     className={cn(
-                        "flex min-h-11 cursor-pointer items-center gap-3 rounded-md border border-input bg-input/30 px-3 text-sm transition-colors hover:bg-input/60 has-[:checked]:border-primary/60 has-[:checked]:bg-primary/10",
+                        "flex min-h-11 cursor-pointer items-center gap-3 rounded-md border border-input-border bg-input/30 px-3 text-sm transition-colors hover:bg-input/60 has-[:checked]:border-primary/60 has-[:checked]:bg-primary/10",
                         attribute.readOnly && "pointer-events-none opacity-50"
                     )}
                 >
