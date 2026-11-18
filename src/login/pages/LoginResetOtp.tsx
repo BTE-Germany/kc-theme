@@ -34,7 +34,7 @@ export default function LoginResetOtp(props: PageProps<Extract<KcContext, { page
                             <label
                                 key={otpCredential.id}
                                 htmlFor={`kc-otp-credential-${index}`}
-                                className="group relative flex min-h-12 cursor-pointer items-center gap-3 px-4 py-3 transition-colors hover:bg-accent/60 has-checked:bg-accent/40 has-focus-visible:ring-[3px] has-focus-visible:ring-ring has-focus-visible:ring-inset"
+                                className="group relative flex min-h-12 cursor-pointer items-center gap-3 px-4 py-3 transition-colors hover:bg-accent/60 has-checked:bg-accent/40 has-focus-visible:ring-[3px] has-focus-visible:ring-ring has-focus-visible:ring-inset forced-colors:has-focus-visible:outline-2 forced-colors:has-focus-visible:-outline-offset-2 forced-colors:has-focus-visible:outline-[color:CanvasText]"
                             >
                                 <input
                                     id={`kc-otp-credential-${index}`}
@@ -50,10 +50,10 @@ export default function LoginResetOtp(props: PageProps<Extract<KcContext, { page
                                 />
                                 <span className="min-w-0 flex-1 text-sm font-medium break-words">{otpCredential.userLabel}</span>
                                 <span
-                                    className="flex size-[18px] shrink-0 items-center justify-center rounded-full border border-input-border transition-colors group-has-checked:border-foreground"
+                                    className="flex size-[18px] shrink-0 items-center justify-center rounded-full border border-input-border transition-colors group-has-checked:border-foreground forced-colors:border-[color:CanvasText]"
                                     aria-hidden="true"
                                 >
-                                    <span className="size-2 scale-0 rounded-full bg-foreground transition-transform duration-200 group-has-checked:scale-100" />
+                                    <span className="size-2 scale-0 rounded-full bg-foreground transition-transform duration-200 group-has-checked:scale-100 forced-colors:bg-[color:CanvasText]" />
                                 </span>
                             </label>
                         ))}
