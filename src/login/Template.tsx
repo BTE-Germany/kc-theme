@@ -185,7 +185,10 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
             </div>
 
             {/* Desktop: a large photo of a building from the BTE Germany Minecraft server. */}
-            <aside aria-hidden={backgroundImage?.attribution === undefined} className="relative hidden flex-1 overflow-hidden bg-muted lg:block">
+            <aside
+                aria-hidden={backgroundImage?.attribution === undefined}
+                className="sticky top-0 hidden h-dvh flex-1 self-start overflow-hidden bg-muted lg:block"
+            >
                 {backgroundImage !== undefined && (
                     <div className="absolute inset-0 animate-fade-in">
                         <div
