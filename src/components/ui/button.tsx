@@ -11,7 +11,9 @@ const buttonVariants = cva(
         "transition-[background-color,border-color,color,box-shadow,transform] duration-200 active:scale-[0.98]",
         "disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50",
         "focus-visible:ring-ring focus-visible:ring-offset-background focus-visible:ring-[3px] focus-visible:ring-offset-1",
-        "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
+        "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        // Forced colors remove background fills; keep buttons recognisable with a system-colored border.
+        "forced-colors:border forced-colors:border-[color:ButtonText]"
     ],
     {
         variants: {

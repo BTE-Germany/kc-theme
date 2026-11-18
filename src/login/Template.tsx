@@ -72,7 +72,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
     return (
         <div className="relative isolate flex min-h-dvh w-full bg-background">
             {/* Mobile and tablet: the photo is a faint backdrop behind the form. */}
-            <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10 overflow-hidden lg:hidden">
+            <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10 overflow-hidden lg:hidden forced-colors:hidden">
                 {backgroundImage !== undefined && (
                     <div
                         className="absolute inset-0 scale-110 bg-cover bg-center opacity-25 blur-sm animate-fade-in"
@@ -198,7 +198,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                 className="sticky top-0 hidden h-dvh flex-1 self-start overflow-hidden bg-muted lg:block"
             >
                 {backgroundImage !== undefined && (
-                    <div className="absolute inset-0 animate-fade-in">
+                    <div className="absolute inset-0 animate-fade-in forced-colors:hidden">
                         <div
                             className="absolute inset-0 bg-cover bg-center will-change-transform motion-safe:animate-ken-burns"
                             style={{ backgroundImage: `url("${backgroundImage.src}")` }}

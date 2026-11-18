@@ -336,6 +336,11 @@ body {
         outline: 2px solid CanvasText !important;
         outline-offset: 2px;
     }
+    /* Inside clipping containers (lists, cards, scroll areas) an outer outline would be cut off; draw it inside. */
+    :where(.overflow-hidden, .overflow-auto, .overflow-x-auto, .overflow-y-auto)
+        :focus-visible {
+        outline-offset: -2px;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
