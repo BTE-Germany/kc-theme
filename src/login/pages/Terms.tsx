@@ -38,7 +38,7 @@ export default function Terms(props: PageProps<Extract<KcContext, { pageId: "ter
                     className={cn(
                         "kc-rich-text max-h-[min(55vh,26rem)] overflow-y-auto rounded-lg border bg-card/60 px-4 pt-4 pb-10 sm:px-5 sm:pt-5",
                         "text-sm leading-relaxed text-pretty break-words text-muted-foreground outline-none transition-[box-shadow]",
-                        "focus-visible:ring-[3px] focus-visible:ring-ring/80",
+                        "focus-visible:ring-[3px] focus-visible:ring-ring",
                         "[scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
                         "[mask-image:linear-gradient(to_bottom,black_calc(100%-2.5rem),transparent)]",
                         "[&_h1]:mb-2 [&_h1]:text-base [&_h1]:font-semibold [&_h1]:text-foreground",

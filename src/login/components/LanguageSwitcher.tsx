@@ -100,7 +100,7 @@ export function LanguageSwitcher(props: { i18n: I18n }) {
                 aria-expanded={isOpen}
                 aria-controls={menuId}
                 onClick={() => setIsOpen(open => !open)}
-                className="flex h-9 cursor-pointer items-center gap-1.5 rounded-md px-2.5 text-sm text-muted-foreground transition-colors outline-none hover:bg-accent/60 hover:text-foreground focus-visible:ring-[3px] focus-visible:ring-ring/80"
+                className="flex h-9 cursor-pointer items-center gap-1.5 rounded-md px-2.5 text-sm text-muted-foreground transition-colors outline-none hover:bg-accent/60 hover:text-foreground focus-visible:ring-[3px] focus-visible:ring-ring"
             >
                 <IconWorld className="size-4" aria-hidden="true" />
                 <span>{currentLanguage.label}</span>

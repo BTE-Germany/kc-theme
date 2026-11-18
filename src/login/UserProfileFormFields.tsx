@@ -1,4 +1,4 @@
-import { useEffect, Fragment } from "react";
+import { useEffect, useId, Fragment } from "react";
 import { assert } from "keycloakify/tools/assert";
 import type { KcClsx } from "keycloakify/login/lib/kcClsx";
 import {
@@ -250,6 +250,8 @@ function InputFieldByType(props: InputFieldByTypeProps) {
 function InputTag(props: InputFieldByTypeProps & { fieldIndex: number | undefined }) {
     const { attribute, fieldIndex, kcClsx, dispatchFormAction, valueOrValues, i18n, displayableErrors } = props;
 
+    const additionalValueId = useId();
+
     const { advancedMsgStr } = i18n;
 
     return (
@@ -264,8 +266,8 @@ function InputTag(props: InputFieldByTypeProps & { fieldIndex: number | undefine
 
                     return inputType ?? "text";
                 })()}
-                // Additional values of a multivalued attribute need their own id; they are labelled via aria-labelledby.
-                id={fieldIndex === undefined || fieldIndex === 0 ? attribute.name : `${attribute.name}-${fieldIndex}`}
+                // Additional values of a multivalued attribute need their own (collision-free) id; they are labelled via aria-labelledby.
+                id={fieldIndex === undefined || fieldIndex === 0 ? attribute.name : additionalValueId}
                 aria-labelledby={fieldIndex !== undefined && fieldIndex > 0 ? `label-${attribute.name}` : undefined}
                 name={attribute.name}
                 value={(() => {

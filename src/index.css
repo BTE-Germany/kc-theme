@@ -85,7 +85,8 @@
     --input: oklch(0.2603 0 0);
     /* Outline of form controls; needs 3:1 contrast against the background (WCAG 1.4.11). */
     --input-border: oklch(0.5 0 0);
-    --ring: oklch(0.4986 0.1601 259.8087);
+    /* Light blue so focus indicators keep at least 3:1 contrast on dark surfaces. */
+    --ring: oklch(0.74 0.12 255);
     --chart-1: oklch(0.8003 0.1821 151.711);
     --chart-2: oklch(0.7137 0.1434 254.624);
     --chart-3: oklch(0.709 0.1592 293.5412);

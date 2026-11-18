@@ -86,7 +86,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                 <header className="flex items-center justify-between gap-4 pt-5 sm:pt-8">
                     <a
                         href={url.loginUrl}
-                        className="group flex items-center gap-3 rounded-md outline-none focus-visible:ring-[3px] focus-visible:ring-ring/80"
+                        className="group flex items-center gap-3 rounded-md outline-none focus-visible:ring-[3px] focus-visible:ring-ring"
                     >
                         <img
                             src={LOGO_URL}
@@ -126,7 +126,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                                     href={url.loginRestartFlowUrl}
                                     title={msgStr("restartLoginTooltip")}
                                     aria-label={msgStr("restartLoginTooltip")}
-                                    className="group flex size-9 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors outline-none hover:bg-accent hover:text-foreground focus-visible:ring-[3px] focus-visible:ring-ring/80"
+                                    className="group flex size-9 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors outline-none hover:bg-accent hover:text-foreground focus-visible:ring-[3px] focus-visible:ring-ring"
                                 >
                                     <IconRefresh className="size-4 transition-transform duration-500 group-hover:-rotate-180" aria-hidden="true" />
                                 </a>
