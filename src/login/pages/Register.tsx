@@ -1,16 +1,17 @@
+import { useLayoutEffect, useState } from "react";
 import type { JSX } from "keycloakify/tools/JSX";
-import { useState } from "react";
 import type { LazyOrNot } from "keycloakify/tools/LazyOrNot";
-import { kcSanitize } from "keycloakify/lib/kcSanitize";
-import { getKcClsx, type KcClsx } from "keycloakify/login/lib/kcClsx";
-import { clsx } from "keycloakify/tools/clsx";
+import { getKcClsx } from "keycloakify/login/lib/kcClsx";
 import type { UserProfileFormFieldsProps } from "keycloakify/login/UserProfileFormFieldsProps";
 import type { PageProps } from "keycloakify/login/pages/PageProps";
 import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
-import { Label } from "@/components/ui/label.tsx";
-import { Checkbox } from "@/components/ui/checkbox.tsx";
-import { Button } from "@/components/ui/button.tsx";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { PageHeader } from "../components/PageHeader";
+import { FieldError } from "../components/FieldError";
+import { useIsSubmitting } from "../components/useIsSubmitting";
 
 type RegisterProps = PageProps<Extract<KcContext, { pageId: "register.ftl" }>, I18n> & {
     UserProfileFormFields: LazyOrNot<(props: UserProfileFormFieldsProps) => JSX.Element>;
@@ -20,18 +21,29 @@ type RegisterProps = PageProps<Extract<KcContext, { pageId: "register.ftl" }>, I
 export default function Register(props: RegisterProps) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes, UserProfileFormFields, doMakeUserConfirmPassword } = props;
 
-    const { kcClsx } = getKcClsx({
-        doUseDefaultCss,
-        classes
-    });
+    const { kcClsx } = getKcClsx({ doUseDefaultCss, classes });
 
-    const { url, messagesPerField, recaptchaRequired, recaptchaVisible, recaptchaSiteKey, recaptchaAction, termsAcceptanceRequired } =
+    const { messageHeader, url, messagesPerField, recaptchaRequired, recaptchaVisible, recaptchaSiteKey, recaptchaAction, termsAcceptanceRequired } =
         kcContext;
 
-    const { msg, msgStr } = i18n;
+    const { msg, msgStr, advancedMsg, currentLanguage } = i18n;
 
     const [isFormSubmittable, setIsFormSubmittable] = useState(false);
     const [areTermsAccepted, setAreTermsAccepted] = useState(false);
+    const { isSubmitting, onSubmit } = useIsSubmitting();
+
+    // Invisible captchas call this global callback once the challenge has been solved.
+    useLayoutEffect(() => {
+        (window as unknown as Record<string, unknown>)["onSubmitRecaptcha"] = () => {
+            (document.getElementById("kc-register-form") as HTMLFormElement | null)?.requestSubmit();
+        };
+
+        return () => {
+            delete (window as unknown as Record<string, unknown>)["onSubmitRecaptcha"];
+        };
+    }, []);
+
+    const isInvisibleCaptcha = recaptchaRequired && !recaptchaVisible && recaptchaAction !== undefined;
 
     return (
         <Template
@@ -40,15 +52,24 @@ export default function Register(props: RegisterProps) {
             doUseDefaultCss={doUseDefaultCss}
             classes={classes}
             headerNode={
-                <>
-                    <h1 className={"text-2xl sm:text-3xl md:text-4xl font-semibold mt-4 sm:mt-6"}>Herzlich Willkommen.</h1>
-                    <p className={"text-sm sm:text-md mt-2 text-neutral-500"}>Gebe unten die erforderlichen Daten an.</p>
-                </>
+                <PageHeader
+                    title={messageHeader !== undefined ? advancedMsg(messageHeader) : msg("registerTitle")}
+                    subtitle={msg("registerSubtitle")}
+                />
             }
             displayMessage={messagesPerField.exists("global")}
             displayRequiredFields
+            displayInfo
+            infoNode={
+                <span>
+                    {msg("alreadyHaveAccount")}{" "}
+                    <a href={url.loginUrl} className="kc-link">
+                        {msg("doLogIn")}
+                    </a>
+                </span>
+            }
         >
-            <form id="kc-register-form" className={"w-full max-w-sm"} action={url.registrationAction} method="post">
+            <form id="kc-register-form" action={url.registrationAction} method="post" onSubmit={onSubmit} className="flex flex-col gap-5">
                 <UserProfileFormFields
                     kcContext={kcContext}
                     i18n={i18n}
@@ -56,60 +77,52 @@ export default function Register(props: RegisterProps) {
                     onIsFormSubmittableValueChange={setIsFormSubmittable}
                     doMakeUserConfirmPassword={doMakeUserConfirmPassword}
                 />
+
                 {termsAcceptanceRequired && (
                     <TermsAcceptance
                         i18n={i18n}
-                        kcClsx={kcClsx}
                         messagesPerField={messagesPerField}
                         areTermsAccepted={areTermsAccepted}
                         onAreTermsAcceptedValueChange={setAreTermsAccepted}
                     />
                 )}
+
                 {recaptchaRequired && (recaptchaVisible || recaptchaAction === undefined) && (
-                    <div className="form-group">
-                        <div className={kcClsx("kcInputWrapperClass")}>
-                            <div
-                                className="cf-turnstile"
-                                data-sitekey={recaptchaSiteKey}
-                                data-action={recaptchaAction}
-                                data-language={"de"}
-                            ></div>
-                        </div>
+                    <div className="flex justify-center overflow-hidden rounded-lg">
+                        {/* Cloudflare Turnstile and Google reCAPTCHA both pick up their container by class name. */}
+                        <div
+                            className="cf-turnstile g-recaptcha"
+                            data-sitekey={recaptchaSiteKey}
+                            data-action={recaptchaAction}
+                            data-language={currentLanguage.languageTag}
+                            data-theme="dark"
+                        />
                     </div>
                 )}
-                <div className={kcClsx("kcFormGroupClass")}>
-                    {recaptchaRequired && !recaptchaVisible && recaptchaAction !== undefined ? (
-                        <div id="kc-form-buttons" className={kcClsx("kcFormButtonsClass")}>
-                            <button
-                                className={clsx(
-                                    kcClsx("kcButtonClass", "kcButtonPrimaryClass", "kcButtonBlockClass", "kcButtonLargeClass"),
-                                    "g-recaptcha"
-                                )}
-                                data-sitekey={recaptchaSiteKey}
-                                data-callback={() => {
-                                    (document.getElementById("kc-register-form") as HTMLFormElement).submit();
-                                }}
-                                data-action={recaptchaAction}
-                                type="submit"
-                            >
-                                {msg("doRegister")}
-                            </button>
-                        </div>
-                    ) : (
-                        <div id="kc-form-buttons" className={kcClsx("kcFormButtonsClass")}>
-                            <Button
-                                disabled={!isFormSubmittable || (termsAcceptanceRequired && !areTermsAccepted)}
-                                className={"w-full mt-8 mb-3"}
-                                type="submit"
-                            >
-                                {msgStr("doRegister")}
-                            </Button>
-                        </div>
-                    )}
 
-                    <Button asChild variant={"ghost"} className={"w-full text-muted-foreground text-xs"}>
-                        <a href={url.loginUrl}>{msg("backToLogin")}</a>
-                    </Button>
+                <div id="kc-form-buttons" className="mt-1">
+                    {isInvisibleCaptcha ? (
+                        <Button
+                            size="lg"
+                            className="g-recaptcha w-full"
+                            data-sitekey={recaptchaSiteKey}
+                            data-callback="onSubmitRecaptcha"
+                            data-action={recaptchaAction}
+                            type="submit"
+                        >
+                            {msg("doRegister")}
+                        </Button>
+                    ) : (
+                        <Button
+                            size="lg"
+                            className="w-full"
+                            type="submit"
+                            loading={isSubmitting}
+                            disabled={!isFormSubmittable || (termsAcceptanceRequired && !areTermsAccepted)}
+                        >
+                            {msgStr("doRegister")}
+                        </Button>
+                    )}
                 </div>
             </form>
         </Template>
@@ -118,50 +131,43 @@ export default function Register(props: RegisterProps) {
 
 function TermsAcceptance(props: {
     i18n: I18n;
-    kcClsx: KcClsx;
     messagesPerField: Pick<KcContext["messagesPerField"], "existsError" | "get">;
     areTermsAccepted: boolean;
     onAreTermsAcceptedValueChange: (areTermsAccepted: boolean) => void;
 }) {
-    const { i18n, kcClsx, messagesPerField, areTermsAccepted, onAreTermsAcceptedValueChange } = props;
+    const { i18n, messagesPerField, areTermsAccepted, onAreTermsAcceptedValueChange } = props;
 
-    const { msg } = i18n;
+    const { msg, msgStr } = i18n;
+
+    const hasError = messagesPerField.existsError("termsAccepted");
 
     return (
-        <>
-            <Label className="my-5 bg-background hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-primary/80 has-[[aria-checked=true]]:bg-primary/40 transition">
+        <div>
+            <label
+                htmlFor="termsAccepted"
+                className={cn(
+                    "flex cursor-pointer items-start gap-3 rounded-lg border bg-card/60 p-4 transition-colors hover:bg-accent/40",
+                    areTermsAccepted && "border-primary/60 bg-primary/10 hover:bg-primary/15",
+                    hasError && "border-red-500/50"
+                )}
+            >
                 <Checkbox
                     id="termsAccepted"
-                    defaultChecked
                     name="termsAccepted"
+                    className="mt-0.5"
                     checked={areTermsAccepted}
-                    onCheckedChange={e => onAreTermsAcceptedValueChange(e as boolean)}
-                    aria-invalid={messagesPerField.existsError("termsAccepted")}
+                    onCheckedChange={checked => onAreTermsAcceptedValueChange(checked === true)}
+                    aria-invalid={hasError}
+                    aria-describedby={hasError ? "input-error-terms-accepted" : undefined}
                 />
-                <div className="grid gap-1.5 font-normal">
-                    <p className="text-sm leading-none font-medium">
-                        {msg("termsTitle")}
-                    </p>
-                    <p className="text-muted-foreground text-sm">
-                        {msg("termsText")}
-                    </p>
-                    {messagesPerField.existsError("termsAccepted") && (
-                        <p className="text-destructive text-sm">
-                            <span
-                                id="input-error-terms-accepted"
-                                className={kcClsx("kcInputErrorMessageClass")}
-                                aria-live="polite"
-                                dangerouslySetInnerHTML={{
-                                    __html: kcSanitize(messagesPerField.get("termsAccepted"))
-                                }}
-                            />
-                        </p>
-                    )}
-                </div>
-
-            </Label>
-
-
-        </>
+                <span className="grid gap-1.5">
+                    <span className="text-sm leading-none font-medium">{msg("termsTitle")}</span>
+                    <span className="kc-rich-text text-sm text-muted-foreground">
+                        {msgStr("termsText") !== "" ? msg("termsText") : msg("acceptTermsText")}
+                    </span>
+                </span>
+            </label>
+            <FieldError id="input-error-terms-accepted" message={hasError ? messagesPerField.get("termsAccepted") : undefined} className="mt-2" />
+        </div>
     );
 }

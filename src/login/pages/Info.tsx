@@ -1,8 +1,10 @@
 import type { PageProps } from "keycloakify/login/pages/PageProps";
 import { kcSanitize } from "keycloakify/lib/kcSanitize";
+import { IconArrowRight, IconInfoCircle } from "@tabler/icons-react";
 import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
-import { Button } from "@/components/ui/button.tsx";
+import { Button } from "@/components/ui/button";
+import { PageHeader } from "../components/PageHeader";
 
 export default function Info(props: PageProps<Extract<KcContext, { pageId: "info.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
@@ -10,6 +12,32 @@ export default function Info(props: PageProps<Extract<KcContext, { pageId: "info
     const { advancedMsgStr, msg } = i18n;
 
     const { messageHeader, message, requiredActions, skipLink, pageRedirectUri, actionUri, client } = kcContext;
+
+    const summaryHtml = (() => {
+        let html = message.summary?.trim() ?? "";
+
+        if (requiredActions) {
+            html += ` <b>${requiredActions.map(requiredAction => advancedMsgStr(`requiredAction.${requiredAction}`)).join(", ")}</b>`;
+        }
+
+        return html;
+    })();
+
+    const action = (() => {
+        if (skipLink) {
+            return undefined;
+        }
+        if (pageRedirectUri) {
+            return { href: pageRedirectUri, label: msg("returnToApplication"), primary: false };
+        }
+        if (actionUri) {
+            return { href: actionUri, label: msg("proceed"), primary: true };
+        }
+        if (client.baseUrl) {
+            return { href: client.baseUrl, label: msg("returnToApplication"), primary: false };
+        }
+        return undefined;
+    })();
 
     return (
         <Template
@@ -19,69 +47,34 @@ export default function Info(props: PageProps<Extract<KcContext, { pageId: "info
             classes={classes}
             displayMessage={false}
             headerNode={
-                <>
-                    <h1 className={"text-2xl sm:text-3xl md:text-4xl font-semibold mt-4 sm:mt-6"}><span
-                        dangerouslySetInnerHTML={{
-                            __html: kcSanitize(messageHeader ?? message.summary)
-                        }}
-                    /></h1>
-                </>
-
+                <PageHeader
+                    icon={<IconInfoCircle />}
+                    title={<span dangerouslySetInnerHTML={{ __html: kcSanitize(messageHeader ?? message.summary) }} />}
+                />
             }
         >
-            <div id="kc-info-message" className={"w-full max-w-md text-foreground text-center"}>
-                <p
-                    className="instruction"
-                    dangerouslySetInnerHTML={{
-                        __html: kcSanitize(
-                            (() => {
-                                let html = message.summary?.trim();
-
-                                if (requiredActions) {
-                                    html += " <b>";
-
-                                    html += requiredActions.map(requiredAction => advancedMsgStr(`requiredAction.${requiredAction}`)).join(", ");
-
-                                    html += "</b>";
-                                }
-
-                                return html;
-                            })()
-                        )
-                    }}
-                />
-                {(() => {
-                    if (skipLink) {
-                        return null;
-                    }
-
-                    if (pageRedirectUri) {
-                        return (
-                            <p>
-                                <a href={pageRedirectUri}>{msg("backToApplication")}</a>
-                            </p>
-                        );
-                    }
-                    if (actionUri) {
-                        return (
-                            <p>
-                                <a href={actionUri} ><Button className={"mt-4"}>
-                                    {msg("proceedWithAction")}
-                                </Button></a>
-                            </p>
-                        );
-                    }
-
-                    if (client.baseUrl) {
-                        return (
-                            <p>
-                                <a href={client.baseUrl}><Button className={"mt-4"} variant={"secondary"}>
-                                    {msg("backToApplication")}
-                                </Button></a>
-                            </p>
-                        );
-                    }
-                })()}
+            <div id="kc-info-message" className="flex flex-col gap-6">
+                {messageHeader !== undefined && (
+                    <p
+                        className="kc-rich-text text-sm leading-relaxed text-muted-foreground"
+                        dangerouslySetInnerHTML={{ __html: kcSanitize(summaryHtml) }}
+                    />
+                )}
+                {messageHeader === undefined && requiredActions !== undefined && (
+                    <p className="text-sm text-muted-foreground">
+                        <b className="text-foreground">
+                            {requiredActions.map(requiredAction => advancedMsgStr(`requiredAction.${requiredAction}`)).join(", ")}
+                        </b>
+                    </p>
+                )}
+                {action !== undefined && (
+                    <Button asChild size="lg" variant={action.primary ? "default" : "outline"} className="group w-full">
+                        <a href={action.href}>
+                            {action.label}
+                            <IconArrowRight className="transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden="true" />
+                        </a>
+                    </Button>
+                )}
             </div>
         </Template>
     );

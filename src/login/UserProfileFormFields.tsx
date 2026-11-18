@@ -1,7 +1,5 @@
-import type { JSX } from "keycloakify/tools/JSX";
 import { useEffect, Fragment } from "react";
 import { assert } from "keycloakify/tools/assert";
-import { useIsPasswordRevealed } from "keycloakify/tools/useIsPasswordRevealed";
 import type { KcClsx } from "keycloakify/login/lib/kcClsx";
 import {
     useUserProfileForm,
@@ -13,10 +11,12 @@ import type { UserProfileFormFieldsProps } from "keycloakify/login/UserProfileFo
 import type { Attribute } from "keycloakify/login/KcContext";
 import type { KcContext } from "./KcContext";
 import type { I18n } from "./i18n";
-import { Input } from "@/components/ui/input.tsx";
-import { Label } from "@/components/ui/label.tsx";
-import { Button } from "@/components/ui/button.tsx";
-import { IconEye, IconEyeOff } from "@tabler/icons-react";
+import { IconMinus, IconPlus } from "@tabler/icons-react";
+import { Input, Select, Textarea } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { PasswordRevealWrapper } from "./components/PasswordInput";
 
 export default function UserProfileFormFields(props: UserProfileFormFieldsProps<KcContext, I18n>) {
     const { kcContext, i18n, kcClsx, onIsFormSubmittableValueChange, doMakeUserConfirmPassword, BeforeField, AfterField } = props;
@@ -39,7 +39,7 @@ export default function UserProfileFormFields(props: UserProfileFormFieldsProps<
     const groupNameRef = { current: "" };
 
     return (
-        <div className={"flex flex-col gap-4"}>
+        <div className="flex flex-col gap-5">
             {formFieldStates.map(({ attribute, displayableErrors, valueOrValues }) => {
                 return (
                     <Fragment key={attribute.name}>
@@ -55,7 +55,7 @@ export default function UserProfileFormFields(props: UserProfileFormFieldsProps<
                             />
                         )}
                         <div
-                            className="grid w-full max-w-sm items-center gap-3"
+                            className="grid w-full gap-2"
                             style={{
                                 display:
                                     attribute.annotations.inputType === "hidden" ||
@@ -64,22 +64,22 @@ export default function UserProfileFormFields(props: UserProfileFormFieldsProps<
                                         : undefined
                             }}
                         >
-                            <div className={kcClsx("kcLabelWrapperClass")}>
-                                <Label htmlFor={attribute.name} className={kcClsx("kcLabelClass")}>
-                                    {advancedMsg(attribute.displayName ?? "")} <span className={"text-xs text-muted-foreground -ml-1"}>{attribute.required && "*"}</span>
+                            <div className="grid gap-1.5">
+                                <Label htmlFor={attribute.name}>
+                                    {advancedMsg(attribute.displayName ?? "")}
+                                    {attribute.required && (
+                                        <span className="text-red-400" aria-hidden="true">
+                                            *
+                                        </span>
+                                    )}
                                 </Label>
                                 {attribute.annotations.inputHelperTextBefore !== undefined && (
-                                    <p
-                                        className={"text-sm text-muted-foreground"}
-                                        id={`form-help-text-before-${attribute.name}`}
-                                        aria-live="polite"
-                                    >
+                                    <p className="text-xs text-muted-foreground" id={`form-help-text-before-${attribute.name}`} aria-live="polite">
                                         {advancedMsg(attribute.annotations.inputHelperTextBefore)}
                                     </p>
                                 )}
                             </div>
-                            <div className={kcClsx("kcInputWrapperClass")}>
-
+                            <div className="grid gap-2">
                                 <InputFieldByType
                                     attribute={attribute}
                                     valueOrValues={valueOrValues}
@@ -90,11 +90,7 @@ export default function UserProfileFormFields(props: UserProfileFormFieldsProps<
                                 />
                                 <FieldErrors attribute={attribute} displayableErrors={displayableErrors} kcClsx={kcClsx} fieldIndex={undefined} />
                                 {attribute.annotations.inputHelperTextAfter !== undefined && (
-                                    <p
-                                        className={"text-sm text-muted-foreground"}
-                                        id={`form-help-text-after-${attribute.name}`}
-                                        aria-live="polite"
-                                    >
+                                    <p className="text-xs text-muted-foreground" id={`form-help-text-after-${attribute.name}`} aria-live="polite">
                                         {advancedMsg(attribute.annotations.inputHelperTextAfter)}
                                     </p>
                                 )}
@@ -125,7 +121,7 @@ function GroupLabel(props: {
     i18n: I18n;
     kcClsx: KcClsx;
 }) {
-    const { attribute, groupNameRef, i18n, kcClsx } = props;
+    const { attribute, groupNameRef, i18n } = props;
 
     const { advancedMsg } = i18n;
 
@@ -135,40 +131,23 @@ function GroupLabel(props: {
         if (groupNameRef.current !== "") {
             assert(attribute.group !== undefined);
 
+            const groupDisplayHeader = attribute.group.displayHeader ?? "";
+            const groupHeaderText = groupDisplayHeader !== "" ? advancedMsg(groupDisplayHeader) : attribute.group.name;
+            const groupDisplayDescription = attribute.group.displayDescription ?? "";
+
             return (
                 <div
-                    className={kcClsx("kcFormGroupClass")}
+                    className="mt-3 border-t pt-5 first:mt-0 first:border-t-0 first:pt-0"
                     {...Object.fromEntries(Object.entries(attribute.group.html5DataAnnotations).map(([key, value]) => [`data-${key}`, value]))}
                 >
-                    {(() => {
-                        const groupDisplayHeader = attribute.group.displayHeader ?? "";
-                        const groupHeaderText = groupDisplayHeader !== "" ? advancedMsg(groupDisplayHeader) : attribute.group.name;
-
-                        return (
-                            <div className={kcClsx("kcContentWrapperClass")}>
-                                <label id={`header-${attribute.group.name}`} className={kcClsx("kcFormGroupHeader")}>
-                                    {groupHeaderText}
-                                </label>
-                            </div>
-                        );
-                    })()}
-                    {(() => {
-                        const groupDisplayDescription = attribute.group.displayDescription ?? "";
-
-                        if (groupDisplayDescription !== "") {
-                            const groupDescriptionText = advancedMsg(groupDisplayDescription);
-
-                            return (
-                                <div className={kcClsx("kcLabelWrapperClass")}>
-                                    <label id={`description-${attribute.group.name}`} className={kcClsx("kcLabelClass")}>
-                                        {groupDescriptionText}
-                                    </label>
-                                </div>
-                            );
-                        }
-
-                        return null;
-                    })()}
+                    <h2 id={`header-${attribute.group.name}`} className="text-base font-semibold tracking-tight">
+                        {groupHeaderText}
+                    </h2>
+                    {groupDisplayDescription !== "" && (
+                        <p id={`description-${attribute.group.name}`} className="mt-1 text-sm text-muted-foreground">
+                            {advancedMsg(groupDisplayDescription)}
+                        </p>
+                    )}
                 </div>
             );
         }
@@ -189,7 +168,7 @@ function FieldErrors(props: { attribute: Attribute; displayableErrors: FormField
     return (
         <p
             id={`input-error-${attribute.name}${fieldIndex === undefined ? "" : `-${fieldIndex}`}`}
-            className={"text-destructive text-sm mt-1"}
+            className="text-xs leading-snug text-red-400 animate-fade-up"
             aria-live="polite"
         >
             {displayableErrors
@@ -244,38 +223,15 @@ function InputFieldByType(props: InputFieldByTypeProps) {
 
             if (attribute.name === "password" || attribute.name === "password-confirm") {
                 return (
-                    <PasswordWrapper kcClsx={props.kcClsx} i18n={props.i18n} passwordInputId={attribute.name}>
+                    <PasswordRevealWrapper i18n={props.i18n} passwordInputId={attribute.name}>
                         {inputNode}
-                    </PasswordWrapper>
+                    </PasswordRevealWrapper>
                 );
             }
 
             return inputNode;
         }
     }
-}
-
-function PasswordWrapper(props: { kcClsx: KcClsx; i18n: I18n; passwordInputId: string; children: JSX.Element }) {
-    const { i18n, passwordInputId, children } = props;
-
-    const { msgStr } = i18n;
-
-    const { isPasswordRevealed, toggleIsPasswordRevealed } = useIsPasswordRevealed({ passwordInputId });
-
-    return (
-        <div className="flex w-full items-center gap-2">
-            {children}
-            <Button
-                variant={"outline"}
-                aria-label={msgStr(isPasswordRevealed ? "hidePassword" : "showPassword")}
-                aria-controls={passwordInputId}
-                onClick={() => toggleIsPasswordRevealed()}
-                type={"button"}
-            >
-                {isPasswordRevealed ? <IconEyeOff /> : <IconEye />}
-                </Button>
-        </div>
-    );
 }
 
 function InputTag(props: InputFieldByTypeProps & { fieldIndex: number | undefined }) {
@@ -307,8 +263,13 @@ function InputTag(props: InputFieldByTypeProps & { fieldIndex: number | undefine
 
                     return valueOrValues;
                 })()}
-                className={kcClsx("kcInputClass")}
+                className={cn((attribute.name === "password" || attribute.name === "password-confirm") && "pr-11")}
                 aria-invalid={displayableErrors.find(error => error.fieldIndex === fieldIndex) !== undefined}
+                aria-describedby={
+                    displayableErrors.some(error => error.fieldIndex === fieldIndex)
+                        ? `input-error-${attribute.name}${fieldIndex === undefined ? "" : `-${fieldIndex}`}`
+                        : undefined
+                }
                 disabled={attribute.readOnly}
                 autoComplete={attribute.autocomplete}
                 placeholder={
@@ -396,32 +357,36 @@ function AddRemoveButtonsMultiValuedAttribute(props: {
 
     const idPostfix = `-${attribute.name}-${fieldIndex + 1}`;
 
+    if (!hasAdd && !hasRemove) {
+        return null;
+    }
+
     return (
-        <>
+        <div className="-mt-1 flex gap-1">
             {hasRemove && (
-                <>
-                    <button
-                        id={`kc-remove${idPostfix}`}
-                        type="button"
-                        className="pf-c-button pf-m-inline pf-m-link"
-                        onClick={() =>
-                            dispatchFormAction({
-                                action: "update",
-                                name: attribute.name,
-                                valueOrValues: values.filter((_, i) => i !== fieldIndex)
-                            })
-                        }
-                    >
-                        {msg("remove")}
-                    </button>
-                    {hasAdd ? <>&nbsp;|&nbsp;</> : null}
-                </>
+                <Button
+                    id={`kc-remove${idPostfix}`}
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={() =>
+                        dispatchFormAction({
+                            action: "update",
+                            name: attribute.name,
+                            valueOrValues: values.filter((_, i) => i !== fieldIndex)
+                        })
+                    }
+                >
+                    <IconMinus aria-hidden="true" />
+                    {msg("remove")}
+                </Button>
             )}
             {hasAdd && (
-                <button
+                <Button
                     id={`kc-add${idPostfix}`}
                     type="button"
-                    className="pf-c-button pf-m-inline pf-m-link"
+                    variant="ghost"
+                    size="sm"
                     onClick={() =>
                         dispatchFormAction({
                             action: "update",
@@ -430,38 +395,18 @@ function AddRemoveButtonsMultiValuedAttribute(props: {
                         })
                     }
                 >
+                    <IconPlus aria-hidden="true" />
                     {msg("addValue")}
-                </button>
+                </Button>
             )}
-        </>
+        </div>
     );
 }
 
 function InputTagSelects(props: InputFieldByTypeProps) {
-    const { attribute, dispatchFormAction, kcClsx, i18n, valueOrValues } = props;
+    const { attribute, dispatchFormAction, i18n, valueOrValues } = props;
 
-    const { classDiv, classInput, classLabel, inputType } = (() => {
-        const { inputType } = attribute.annotations;
-
-        assert(inputType === "select-radiobuttons" || inputType === "multiselect-checkboxes");
-
-        switch (inputType) {
-            case "select-radiobuttons":
-                return {
-                    inputType: "radio",
-                    classDiv: kcClsx("kcInputClassRadio"),
-                    classInput: kcClsx("kcInputClassRadioInput"),
-                    classLabel: kcClsx("kcInputClassRadioLabel")
-                };
-            case "multiselect-checkboxes":
-                return {
-                    inputType: "checkbox",
-                    classDiv: kcClsx("kcInputClassCheckbox"),
-                    classInput: kcClsx("kcInputClassCheckboxInput"),
-                    classLabel: kcClsx("kcInputClassCheckboxLabel")
-                };
-        }
-    })();
+    const inputType = attribute.annotations.inputType === "select-radiobuttons" ? "radio" : "checkbox";
 
     const options = (() => {
         walk: {
@@ -488,15 +433,22 @@ function InputTagSelects(props: InputFieldByTypeProps) {
     })();
 
     return (
-        <>
+        <div role={inputType === "radio" ? "radiogroup" : "group"} className="grid gap-2">
             {options.map(option => (
-                <div key={option} className={classDiv}>
+                <label
+                    key={option}
+                    htmlFor={`${attribute.name}-${option}`}
+                    className={cn(
+                        "flex min-h-11 cursor-pointer items-center gap-3 rounded-md border border-input bg-input/30 px-3 text-sm transition-colors hover:bg-input/60 has-[:checked]:border-primary/60 has-[:checked]:bg-primary/10",
+                        attribute.readOnly && "pointer-events-none opacity-50"
+                    )}
+                >
                     <input
                         type={inputType}
                         id={`${attribute.name}-${option}`}
                         name={attribute.name}
                         value={option}
-                        className={classInput}
+                        className="size-4 shrink-0 accent-primary"
                         aria-invalid={props.displayableErrors.length !== 0}
                         disabled={attribute.readOnly}
                         checked={valueOrValues instanceof Array ? valueOrValues.includes(option) : valueOrValues === option}
@@ -531,30 +483,24 @@ function InputTagSelects(props: InputFieldByTypeProps) {
                             })
                         }
                     />
-                    <label
-                        htmlFor={`${attribute.name}-${option}`}
-                        className={`${classLabel}${attribute.readOnly ? ` ${kcClsx("kcInputClassRadioCheckboxLabelDisabled")}` : ""}`}
-                    >
-                        {inputLabel(i18n, attribute, option)}
-                    </label>
-                </div>
+                    <span>{inputLabel(i18n, attribute, option)}</span>
+                </label>
             ))}
-        </>
+        </div>
     );
 }
 
 function TextareaTag(props: InputFieldByTypeProps) {
-    const { attribute, dispatchFormAction, kcClsx, displayableErrors, valueOrValues } = props;
+    const { attribute, dispatchFormAction, displayableErrors, valueOrValues } = props;
 
     assert(typeof valueOrValues === "string");
 
     const value = valueOrValues;
 
     return (
-        <textarea
+        <Textarea
             id={attribute.name}
             name={attribute.name}
-            className={kcClsx("kcInputClass")}
             aria-invalid={displayableErrors.length !== 0}
             disabled={attribute.readOnly}
             cols={attribute.annotations.inputTypeCols === undefined ? undefined : parseInt(`${attribute.annotations.inputTypeCols}`)}
@@ -580,15 +526,14 @@ function TextareaTag(props: InputFieldByTypeProps) {
 }
 
 function SelectTag(props: InputFieldByTypeProps) {
-    const { attribute, dispatchFormAction, kcClsx, displayableErrors, i18n, valueOrValues } = props;
+    const { attribute, dispatchFormAction, displayableErrors, i18n, valueOrValues } = props;
 
     const isMultiple = attribute.annotations.inputType === "multiselect";
 
     return (
-        <select
+        <Select
             id={attribute.name}
             name={attribute.name}
-            className={kcClsx("kcInputClass")}
             aria-invalid={displayableErrors.length !== 0}
             disabled={attribute.readOnly}
             multiple={isMultiple}
@@ -649,7 +594,7 @@ function SelectTag(props: InputFieldByTypeProps) {
                     </option>
                 ));
             })()}
-        </select>
+        </Select>
     );
 }
 

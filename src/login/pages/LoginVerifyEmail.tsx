@@ -1,6 +1,8 @@
 import type { PageProps } from "keycloakify/login/pages/PageProps";
+import { IconMailCheck } from "@tabler/icons-react";
 import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
+import { PageHeader } from "../components/PageHeader";
 
 export default function LoginVerifyEmail(props: PageProps<Extract<KcContext, { pageId: "login-verify-email.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
@@ -16,20 +18,20 @@ export default function LoginVerifyEmail(props: PageProps<Extract<KcContext, { p
             doUseDefaultCss={doUseDefaultCss}
             classes={classes}
             displayInfo
-            headerNode={<h1 className={"text-2xl sm:text-3xl md:text-4xl font-semibold mt-4 sm:mt-6"}>{msg("emailVerifyTitle")}</h1>}
-
-        >
-            <div className={"w-full max-w-md text-foreground"}>
-                <p className="instruction">{msg("emailVerifyInstruction1", user?.email ?? "")}</p>
-                <p className="instruction mt-4 text-muted-foreground">
-                    {msg("emailVerifyInstruction2")}
-                    <br />
-                    <a href={url.loginAction} className={"text-primary hover:underline"}>{msg("doClickHere")}</a>
-                    &nbsp;
+            headerNode={<PageHeader icon={<IconMailCheck />} title={msg("emailVerifyTitle")} />}
+            infoNode={
+                <p className="instruction">
+                    {msg("emailVerifyInstruction2")}{" "}
+                    <a href={url.loginAction} className="kc-link">
+                        {msg("doClickHere")}
+                    </a>{" "}
                     {msg("emailVerifyInstruction3")}
                 </p>
+            }
+        >
+            <div className="rounded-lg border bg-card/60 p-4 text-sm leading-relaxed text-muted-foreground">
+                <p className="instruction break-words">{msg("emailVerifyInstruction1", user?.email ?? "")}</p>
             </div>
-
         </Template>
     );
 }

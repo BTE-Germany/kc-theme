@@ -1,0 +1,43 @@
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { createKcPageStory } from "../KcPageStory";
+
+const { KcPageStory } = createKcPageStory({ pageId: "login-oauth2-device-verify-user-code.ftl" });
+
+const meta = {
+    title: "login/login-oauth2-device-verify-user-code.ftl",
+    component: KcPageStory
+} satisfies Meta<typeof KcPageStory>;
+
+export default meta;
+
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
+    render: () => <KcPageStory />
+};
+
+export const WithInvalidCode: Story = {
+    render: () => (
+        <KcPageStory
+            kcContext={{
+                message: {
+                    type: "error",
+                    summary: "Invalid code, please try again."
+                }
+            }}
+        />
+    )
+};
+
+export const WithExpiredCode: Story = {
+    render: () => (
+        <KcPageStory
+            kcContext={{
+                message: {
+                    type: "error",
+                    summary: "The code has expired. Please go back to your device and try connecting again."
+                }
+            }}
+        />
+    )
+};

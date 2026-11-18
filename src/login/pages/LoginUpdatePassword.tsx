@@ -1,28 +1,26 @@
-import type { JSX } from "keycloakify/tools/JSX";
-import { useIsPasswordRevealed } from "keycloakify/tools/useIsPasswordRevealed";
-import { kcSanitize } from "keycloakify/lib/kcSanitize";
-import { getKcClsx, type KcClsx } from "keycloakify/login/lib/kcClsx";
 import type { PageProps } from "keycloakify/login/pages/PageProps";
+import { IconLockPassword } from "@tabler/icons-react";
 import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
-import { Label } from "@/components/ui/label.tsx";
-import { Input } from "@/components/ui/input.tsx";
-import { Button } from "@/components/ui/button.tsx";
-import { IconEye, IconEyeOff } from "@tabler/icons-react";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import classNames from "classnames";
+import { cn } from "@/lib/utils";
+import { PageHeader } from "../components/PageHeader";
+import { Field } from "../components/Field";
+import { PasswordInput } from "../components/PasswordInput";
+import { useIsSubmitting } from "../components/useIsSubmitting";
 
 export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, { pageId: "login-update-password.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
 
-    const { kcClsx } = getKcClsx({
-        doUseDefaultCss,
-        classes
-    });
-
     const { msg, msgStr } = i18n;
 
     const { url, messagesPerField, isAppInitiatedAction } = kcContext;
+
+    const { isSubmitting, onSubmit } = useIsSubmitting();
+
+    const hasError = messagesPerField.existsError("password", "password-confirm");
 
     return (
         <Template
@@ -30,126 +28,65 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
             i18n={i18n}
             doUseDefaultCss={doUseDefaultCss}
             classes={classes}
-            displayMessage={!messagesPerField.existsError("password", "password-confirm")}
-            headerNode={<h1 className={"text-2xl sm:text-3xl md:text-4xl font-semibold mt-4 sm:mt-6"}>{msg("updatePasswordTitle")}</h1>}
+            displayMessage={!hasError}
+            headerNode={<PageHeader icon={<IconLockPassword />} title={msg("updatePasswordTitle")} />}
         >
-            <form id="kc-passwd-update-form" className={kcClsx("kcFormClass")} action={url.loginAction} method="post">
-                <div className={"w-full max-w-sm flex flex-col gap-4"}>
-                    <div className="grid w-full max-w-sm items-center gap-3">
-                        <Label htmlFor="password-new">{msg("passwordNew")}</Label>
-                        <PasswordWrapper kcClsx={kcClsx} i18n={i18n} passwordInputId="password-new">
-                            <Input
-                                type="password"
-                                id="password-new"
-                                name="password-new"
-                                className={kcClsx("kcInputClass")}
-                                autoFocus
-                                autoComplete="new-password"
-                                aria-invalid={messagesPerField.existsError("password", "password-confirm")}
-                            />
-                        </PasswordWrapper>
-                        {messagesPerField.existsError("password") && (
-                            <span
-                                id="input-error-password"
-                                className={"text-destructive text-xs"}
-                                aria-live="polite"
-                                dangerouslySetInnerHTML={{
-                                    __html: kcSanitize(messagesPerField.get("password"))
-                                }}
-                            />
-                        )}
-                    </div>
+            <form id="kc-passwd-update-form" action={url.loginAction} method="post" onSubmit={onSubmit} className="flex flex-col gap-5">
+                <Field htmlFor="password-new" label={msg("passwordNew")} errorId="input-error-password" error={messagesPerField.get("password")}>
+                    <PasswordInput
+                        id="password-new"
+                        name="password-new"
+                        i18n={i18n}
+                        autoFocus
+                        autoComplete="new-password"
+                        aria-invalid={hasError}
+                        aria-describedby={messagesPerField.existsError("password") ? "input-error-password" : undefined}
+                    />
+                </Field>
 
-                    <div className="grid w-full max-w-sm items-center gap-3">
-                        <Label htmlFor="password-confirm">{msg("passwordConfirm")}</Label>
-                        <PasswordWrapper kcClsx={kcClsx} i18n={i18n} passwordInputId="password-new">
-                            <Input
-                                type="password"
-                                id="password-confirm"
-                                name="password-confirm"
-                                className={kcClsx("kcInputClass")}
-                                autoComplete="new-password"
-                                aria-invalid={messagesPerField.existsError("password", "password-confirm")}
-                            />
-                        </PasswordWrapper>
-                        {messagesPerField.existsError("password") && (
-                            <span
-                                id="input-error-password-confirm"
-                                className={"text-destructive text-xs"}
-                                aria-live="polite"
-                                dangerouslySetInnerHTML={{
-                                    __html: kcSanitize(messagesPerField.get("password-confirm"))
-                                }}
-                            />
-                        )}
-                    </div>
-                    <LogoutOtherSessions kcClsx={kcClsx} i18n={i18n} />
+                <Field
+                    htmlFor="password-confirm"
+                    label={msg("passwordConfirm")}
+                    errorId="input-error-password-confirm"
+                    error={messagesPerField.get("password-confirm")}
+                >
+                    <PasswordInput
+                        id="password-confirm"
+                        name="password-confirm"
+                        i18n={i18n}
+                        autoComplete="new-password"
+                        aria-invalid={hasError}
+                        aria-describedby={messagesPerField.existsError("password-confirm") ? "input-error-password-confirm" : undefined}
+                    />
+                </Field>
+
+                <div className="flex items-center gap-2.5">
+                    <Checkbox id="logout-sessions" name="logout-sessions" value="on" defaultChecked />
+                    <Label htmlFor="logout-sessions" className="cursor-pointer font-normal text-muted-foreground">
+                        {msg("logoutOtherSessions")}
+                    </Label>
                 </div>
 
-                <div className={kcClsx("kcFormGroupClass")}>
-
-                    <div id="kc-form-buttons" className={classNames("mt-8", {
-                        "grid grid-cols-2 gap-3": isAppInitiatedAction
-                    })}>
-                        {isAppInitiatedAction && (
-                            <Button
-                                variant={"outline"}
-                                className={"w-full"}
-                                type="submit"
-                                name="cancel-aia"
-                                value="true"
-                            >
-                                {msg("doCancel")}
-                            </Button>
-                        )}
+                {/* Submit comes first in the DOM so that pressing Enter submits instead of cancelling; Cancel is moved left visually. */}
+                <div id="kc-form-buttons" className={cn("mt-1 grid gap-3", isAppInitiatedAction && "grid-cols-2")}>
+                    <Button type="submit" size="lg" className="w-full" loading={isSubmitting}>
+                        {msgStr("doSubmit")}
+                    </Button>
+                    {isAppInitiatedAction && (
                         <Button
+                            variant="outline"
+                            size="lg"
+                            className="order-first w-full"
                             type="submit"
-                            className={"w-full"}
+                            name="cancel-aia"
+                            value="true"
+                            formNoValidate
                         >
-                            {msgStr("doSubmit")}
+                            {msg("doCancel")}
                         </Button>
-
-                    </div>
+                    )}
                 </div>
             </form>
         </Template>
-    );
-}
-
-function LogoutOtherSessions(props: { kcClsx: KcClsx; i18n: I18n }) {
-    const { i18n } = props;
-
-    const { msg } = i18n;
-
-    return (
-        <div>
-            <div className="flex items-center gap-3">
-                <Checkbox id="logout-sessions" name="logout-sessions" value="on" defaultChecked={true} />
-                <Label htmlFor="logout-sessions">{msg("logoutOtherSessions")}</Label>
-            </div>
-        </div>
-    );
-}
-
-function PasswordWrapper(props: { kcClsx: KcClsx; i18n: I18n; passwordInputId: string; children: JSX.Element }) {
-    const { i18n, passwordInputId, children } = props;
-
-    const { msgStr } = i18n;
-
-    const { isPasswordRevealed, toggleIsPasswordRevealed } = useIsPasswordRevealed({ passwordInputId });
-
-    return (
-        <div className="flex w-full items-center gap-2">
-            {children}
-            <Button
-                variant={"outline"}
-                aria-label={msgStr(isPasswordRevealed ? "hidePassword" : "showPassword")}
-                aria-controls={passwordInputId}
-                onClick={() => toggleIsPasswordRevealed()}
-                type={"button"}
-            >
-                {isPasswordRevealed ? <IconEyeOff /> : <IconEye />}
-            </Button>
-        </div>
     );
 }

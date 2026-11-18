@@ -1,6 +1,8 @@
 import type { PageProps } from "keycloakify/login/pages/PageProps";
+import { IconMailForward } from "@tabler/icons-react";
 import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
+import { PageHeader } from "../components/PageHeader";
 
 export default function LoginIdpLinkEmail(props: PageProps<Extract<KcContext, { pageId: "login-idp-link-email.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
@@ -15,17 +17,25 @@ export default function LoginIdpLinkEmail(props: PageProps<Extract<KcContext, { 
             i18n={i18n}
             doUseDefaultCss={doUseDefaultCss}
             classes={classes}
-            headerNode={<h1 className={"text-2xl sm:text-3xl md:text-4xl font-semibold mt-4 sm:mt-6"}>{msg("emailLinkIdpTitle", idpAlias)}</h1>}
+            headerNode={<PageHeader icon={<IconMailForward />} title={msg("emailLinkIdpTitle", idpAlias)} />}
         >
-            <div className={"w-full max-w-md text-foreground flex flex-col gap-4"}>
-                <p id="instruction1" className="instruction font-medium">
+            <div className="flex flex-col gap-4 text-sm leading-relaxed">
+                <p id="instruction1" className="instruction rounded-lg border bg-card/60 p-4 break-words">
                     {msg("emailLinkIdp1", idpAlias, brokerContext.username, realm.displayName)}
                 </p>
                 <p id="instruction2" className="instruction text-muted-foreground">
-                    {msg("emailLinkIdp2")} <a href={url.loginAction}>{msg("doClickHere")}</a> {msg("emailLinkIdp3")}
+                    {msg("emailLinkIdp2")}{" "}
+                    <a href={url.loginAction} className="kc-link">
+                        {msg("doClickHere")}
+                    </a>{" "}
+                    {msg("emailLinkIdp3")}
                 </p>
                 <p id="instruction3" className="instruction text-muted-foreground">
-                    {msg("emailLinkIdp4")} <a href={url.loginAction}>{msg("doClickHere")}</a> {msg("emailLinkIdp5")}
+                    {msg("emailLinkIdp4")}{" "}
+                    <a href={url.loginAction} className="kc-link">
+                        {msg("doClickHere")}
+                    </a>{" "}
+                    {msg("emailLinkIdp5")}
                 </p>
             </div>
         </Template>

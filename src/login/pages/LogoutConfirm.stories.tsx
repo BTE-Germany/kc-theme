@@ -1,0 +1,27 @@
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { createKcPageStory } from "../KcPageStory";
+
+const { KcPageStory } = createKcPageStory({ pageId: "logout-confirm.ftl" });
+
+const meta = {
+    title: "login/logout-confirm.ftl",
+    component: KcPageStory
+} satisfies Meta<typeof KcPageStory>;
+
+export default meta;
+
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
+    render: () => <KcPageStory />
+};
+
+export const WithoutBackToApplication: Story = {
+    render: () => (
+        <KcPageStory
+            kcContext={{
+                logoutConfirm: { code: "123", skipLink: true }
+            }}
+        />
+    )
+};

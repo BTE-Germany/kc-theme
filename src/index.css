@@ -2,7 +2,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-
 @custom-variant dark (&:is(.dark *));
 
 :root {
@@ -12,9 +11,9 @@
     --card-foreground: oklch(0.2046 0 0);
     --popover: oklch(0.9911 0 0);
     --popover-foreground: oklch(0.4386 0 0);
-    --primary: oklch(0.8348 0.1302 160.9080);
+    --primary: oklch(0.8348 0.1302 160.908);
     --primary-foreground: oklch(0.2626 0.0147 166.4589);
-    --secondary: oklch(0.9940 0 0);
+    --secondary: oklch(0.994 0 0);
     --secondary-foreground: oklch(0.2046 0 0);
     --muted: oklch(0.9461 0 0);
     --muted-foreground: oklch(0.2435 0 0);
@@ -24,20 +23,20 @@
     --destructive-foreground: oklch(0.9934 0.0032 17.2118);
     --border: oklch(0.9037 0 0);
     --input: oklch(0.9731 0 0);
-    --ring: oklch(0.8348 0.1302 160.9080);
-    --chart-1: oklch(0.8348 0.1302 160.9080);
-    --chart-2: oklch(0.6231 0.1880 259.8145);
+    --ring: oklch(0.8348 0.1302 160.908);
+    --chart-1: oklch(0.8348 0.1302 160.908);
+    --chart-2: oklch(0.6231 0.188 259.8145);
     --chart-3: oklch(0.6056 0.2189 292.7172);
     --chart-4: oklch(0.7686 0.1647 70.0804);
     --chart-5: oklch(0.6959 0.1491 162.4796);
     --sidebar: oklch(0.9911 0 0);
     --sidebar-foreground: oklch(0.5452 0 0);
-    --sidebar-primary: oklch(0.8348 0.1302 160.9080);
+    --sidebar-primary: oklch(0.8348 0.1302 160.908);
     --sidebar-primary-foreground: oklch(0.2626 0.0147 166.4589);
     --sidebar-accent: oklch(0.9461 0 0);
     --sidebar-accent-foreground: oklch(0.2435 0 0);
     --sidebar-border: oklch(0.9037 0 0);
-    --sidebar-ring: oklch(0.8348 0.1302 160.9080);
+    --sidebar-ring: oklch(0.8348 0.1302 160.908);
     --font-sans: Outfit, sans-serif;
     --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
     --font-mono: monospace;
@@ -50,11 +49,15 @@
     --shadow-color: #000000;
     --shadow-2xs: 0px 1px 3px 0px hsl(0 0% 0% / 0.09);
     --shadow-xs: 0px 1px 3px 0px hsl(0 0% 0% / 0.09);
-    --shadow-sm: 0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 1px 2px -1px hsl(0 0% 0% / 0.17);
+    --shadow-sm:
+        0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 1px 2px -1px hsl(0 0% 0% / 0.17);
     --shadow: 0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 1px 2px -1px hsl(0 0% 0% / 0.17);
-    --shadow-md: 0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 2px 4px -1px hsl(0 0% 0% / 0.17);
-    --shadow-lg: 0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 4px 6px -1px hsl(0 0% 0% / 0.17);
-    --shadow-xl: 0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 8px 10px -1px hsl(0 0% 0% / 0.17);
+    --shadow-md:
+        0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 2px 4px -1px hsl(0 0% 0% / 0.17);
+    --shadow-lg:
+        0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 4px 6px -1px hsl(0 0% 0% / 0.17);
+    --shadow-xl:
+        0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 8px 10px -1px hsl(0 0% 0% / 0.17);
     --shadow-2xl: 0px 1px 3px 0px hsl(0 0% 0% / 0.43);
     --tracking-normal: 0.025em;
     --spacing: 0.25rem;
@@ -67,7 +70,7 @@
     --card-foreground: oklch(0.9288 0.0126 255.5078);
     --popover: oklch(0.2603 0 0);
     --popover-foreground: oklch(0.7348 0 0);
-    --primary: oklch(0.3914 0.1330 259.8612);
+    --primary: oklch(0.3914 0.133 259.8612);
     --primary-foreground: oklch(0.9213 0.0135 167.1556);
     --secondary: oklch(0.2603 0 0);
     --secondary-foreground: oklch(0.9851 0 0);
@@ -80,11 +83,11 @@
     --border: oklch(0.2809 0 0);
     --input: oklch(0.2603 0 0);
     --ring: oklch(0.4986 0.1601 259.8087);
-    --chart-1: oklch(0.8003 0.1821 151.7110);
-    --chart-2: oklch(0.7137 0.1434 254.6240);
-    --chart-3: oklch(0.7090 0.1592 293.5412);
+    --chart-1: oklch(0.8003 0.1821 151.711);
+    --chart-2: oklch(0.7137 0.1434 254.624);
+    --chart-3: oklch(0.709 0.1592 293.5412);
     --chart-4: oklch(0.8369 0.1644 84.4286);
-    --chart-5: oklch(0.7845 0.1325 181.9120);
+    --chart-5: oklch(0.7845 0.1325 181.912);
     --sidebar: oklch(0.1822 0 0);
     --sidebar-foreground: oklch(0.6301 0 0);
     --sidebar-primary: oklch(0.4365 0.1044 156.7556);
@@ -92,7 +95,7 @@
     --sidebar-accent: oklch(0.3132 0 0);
     --sidebar-accent-foreground: oklch(0.9851 0 0);
     --sidebar-border: oklch(0.2809 0 0);
-    --sidebar-ring: oklch(0.8003 0.1821 151.7110);
+    --sidebar-ring: oklch(0.8003 0.1821 151.711);
     --font-sans: Outfit, sans-serif;
     --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
     --font-mono: monospace;
@@ -105,11 +108,15 @@
     --shadow-color: #000000;
     --shadow-2xs: 0px 1px 3px 0px hsl(0 0% 0% / 0.09);
     --shadow-xs: 0px 1px 3px 0px hsl(0 0% 0% / 0.09);
-    --shadow-sm: 0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 1px 2px -1px hsl(0 0% 0% / 0.17);
+    --shadow-sm:
+        0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 1px 2px -1px hsl(0 0% 0% / 0.17);
     --shadow: 0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 1px 2px -1px hsl(0 0% 0% / 0.17);
-    --shadow-md: 0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 2px 4px -1px hsl(0 0% 0% / 0.17);
-    --shadow-lg: 0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 4px 6px -1px hsl(0 0% 0% / 0.17);
-    --shadow-xl: 0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 8px 10px -1px hsl(0 0% 0% / 0.17);
+    --shadow-md:
+        0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 2px 4px -1px hsl(0 0% 0% / 0.17);
+    --shadow-lg:
+        0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 4px 6px -1px hsl(0 0% 0% / 0.17);
+    --shadow-xl:
+        0px 1px 3px 0px hsl(0 0% 0% / 0.17), 0px 8px 10px -1px hsl(0 0% 0% / 0.17);
     --shadow-2xl: 0px 1px 3px 0px hsl(0 0% 0% / 0.43);
 }
 
@@ -178,15 +185,150 @@ body {
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
+    * {
+        @apply border-border outline-ring/50;
+    }
+    body {
+        @apply bg-background text-foreground;
+    }
+    ::selection {
+        @apply bg-primary/30 text-foreground;
+    }
+}
 
-  .shadow-skeumorphic {
-    box-shadow: var(--shadow-skeumorphic);
-  }
+/* -------------------------------------------------------------------------
+ * Motion
+ * Small, purposeful animations. All of them are disabled for users who
+ * prefer reduced motion (see the media query at the end of this file).
+ * ---------------------------------------------------------------------- */
 
+@keyframes kc-fade-up {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes kc-fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes kc-shake {
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+    20%,
+    60% {
+        transform: translateX(-4px);
+    }
+    40%,
+    80% {
+        transform: translateX(4px);
+    }
+}
+
+@keyframes kc-ken-burns {
+    from {
+        transform: scale(1.12) translate3d(0, 0, 0);
+    }
+    to {
+        transform: scale(1) translate3d(-1.5%, -1%, 0);
+    }
+}
+
+@keyframes kc-pop {
+    0% {
+        transform: scale(0.6);
+        opacity: 0;
+    }
+    60% {
+        transform: scale(1.08);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@utility animate-fade-up {
+    animation: kc-fade-up 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@utility animate-fade-in {
+    animation: kc-fade-in 700ms ease-out both;
+}
+
+@utility animate-shake {
+    animation: kc-shake 420ms cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@utility animate-pop {
+    animation: kc-pop 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@utility animate-ken-burns {
+    animation: kc-ken-burns 30s ease-out both;
+}
+
+/* Children of a .kc-stagger container fade in one after another. */
+.kc-stagger > * {
+    animation: kc-fade-up 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.kc-stagger > *:nth-child(1) {
+    animation-delay: 40ms;
+}
+.kc-stagger > *:nth-child(2) {
+    animation-delay: 90ms;
+}
+.kc-stagger > *:nth-child(3) {
+    animation-delay: 140ms;
+}
+.kc-stagger > *:nth-child(4) {
+    animation-delay: 190ms;
+}
+.kc-stagger > *:nth-child(5) {
+    animation-delay: 240ms;
+}
+.kc-stagger > *:nth-child(6) {
+    animation-delay: 290ms;
+}
+.kc-stagger > *:nth-child(n + 7) {
+    animation-delay: 340ms;
+}
+
+@layer components {
+    /* Animated underline for inline text links. */
+    .kc-link {
+        @apply font-medium text-foreground underline decoration-transparent decoration-1 underline-offset-4 transition-colors duration-200 hover:decoration-current focus-visible:decoration-current focus-visible:outline-none;
+    }
+
+    /* Rich text coming from Keycloak messages (may contain links or lists). */
+    .kc-rich-text a {
+        @apply font-medium text-foreground underline underline-offset-4;
+    }
+    .kc-rich-text ul {
+        @apply mt-1 list-disc pl-5;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 1ms !important;
+        animation-delay: 0ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 1ms !important;
+        scroll-behavior: auto !important;
+    }
 }

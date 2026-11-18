@@ -1,33 +1,23 @@
-import { getKcClsx } from "keycloakify/login/lib/kcClsx";
-import { kcSanitize } from "keycloakify/lib/kcSanitize";
 import type { PageProps } from "keycloakify/login/pages/PageProps";
+import { IconArrowLeft, IconKey } from "@tabler/icons-react";
 import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input.tsx";
-import { Button } from "@/components/ui/button.tsx";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { PageHeader } from "../components/PageHeader";
+import { Field } from "../components/Field";
+import { useIsSubmitting } from "../components/useIsSubmitting";
 
-export default function LoginResetPassword(
-    props: PageProps<
-        Extract<
-            KcContext,
-            {
-                pageId: "login-reset-password.ftl";
-            }
-        >,
-        I18n
-    >
-) {
+export default function LoginResetPassword(props: PageProps<Extract<KcContext, { pageId: "login-reset-password.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
-
-    const { kcClsx } = getKcClsx({
-        doUseDefaultCss,
-        classes
-    });
 
     const { url, realm, auth, messagesPerField } = kcContext;
 
     const { msg, msgStr } = i18n;
+
+    const { isSubmitting, onSubmit } = useIsSubmitting();
+
+    const hasError = messagesPerField.existsError("username");
 
     return (
         <Template
@@ -35,54 +25,47 @@ export default function LoginResetPassword(
             i18n={i18n}
             doUseDefaultCss={doUseDefaultCss}
             classes={classes}
-            displayInfo
-            displayMessage={!messagesPerField.existsError("username")}
-            headerNode={<>
-                <h1 className={"text-2xl sm:text-3xl md:text-4xl font-semibold mt-4 sm:mt-6"}>{msg("emailForgotTitle")}</h1>
-                <p className={"text-sm sm:text-md mt-2 text-neutral-500 max-w-sm text-center"}>{realm.duplicateEmailsAllowed ? msg("emailInstructionUsername") : msg("emailInstruction")}</p>
-            </>}
+            displayMessage={!hasError}
+            headerNode={
+                <PageHeader
+                    icon={<IconKey />}
+                    title={msg("emailForgotTitle")}
+                    subtitle={realm.duplicateEmailsAllowed ? msg("emailInstructionUsername") : msg("emailInstruction")}
+                />
+            }
         >
-            <form id="kc-reset-password-form" className={kcClsx("kcFormClass")} action={url.loginAction} method="post">
-                <div className={"w-full max-w-sm"}>
-                    <div className="grid w-full max-w-sm items-center gap-3">
-                        <Label htmlFor="username">
-                            {!realm.loginWithEmailAllowed
-                                ? msg("username")
-                                : !realm.registrationEmailAsUsername
-                                    ? msg("usernameOrEmail")
-                                    : msg("email")}
-                        </Label>
-                        <Input
-                            type="text"
-                            id="username"
-                            name="username"
-                            className={kcClsx("kcInputClass")}
-                            autoFocus
-                            defaultValue={auth.attemptedUsername ?? ""}
-                            aria-invalid={messagesPerField.existsError("username")}
-                        />
-                        {messagesPerField.existsError("username") && (
-                            <span
-                                id="input-error-username"
-                                className={"text-destructive text-xs"}
-                                aria-live="polite"
-                                dangerouslySetInnerHTML={{
-                                    __html: kcSanitize(messagesPerField.get("username"))
-                                }}
-                            />
-                        )}
-                    </div>
-                </div>
-                <div className={kcClsx("kcFormGroupClass", "kcFormSettingClass")}>
+            <form id="kc-reset-password-form" action={url.loginAction} method="post" onSubmit={onSubmit} className="flex flex-col gap-5">
+                <Field
+                    htmlFor="username"
+                    label={
+                        !realm.loginWithEmailAllowed ? msg("username") : !realm.registrationEmailAsUsername ? msg("usernameOrEmail") : msg("email")
+                    }
+                    errorId="input-error-username"
+                    error={hasError ? messagesPerField.get("username") : undefined}
+                >
+                    <Input
+                        type="text"
+                        id="username"
+                        name="username"
+                        autoFocus
+                        autoCapitalize="none"
+                        spellCheck={false}
+                        autoComplete="username"
+                        defaultValue={auth.attemptedUsername ?? ""}
+                        aria-invalid={hasError}
+                        aria-describedby={hasError ? "input-error-username" : undefined}
+                    />
+                </Field>
 
-                    <Button
-                        className={"w-full mt-8 mb-3"}
-                        type="submit"
-                    >
+                <div className="mt-1 flex flex-col gap-2">
+                    <Button size="lg" className="w-full" type="submit" loading={isSubmitting}>
                         {msgStr("doSubmit")}
                     </Button>
-                    <Button asChild variant={"ghost"} className={"w-full text-muted-foreground text-xs"}>
-                        <a href={url.loginUrl}>{msg("backToLogin")}</a>
+                    <Button asChild variant="ghost" className="group w-full">
+                        <a href={url.loginUrl}>
+                            <IconArrowLeft className="transition-transform duration-200 group-hover:-translate-x-0.5" aria-hidden="true" />
+                            {msg("goBack")}
+                        </a>
                     </Button>
                 </div>
             </form>
