@@ -534,6 +534,7 @@ function TextareaTag(props: InputFieldByTypeProps) {
             name={attribute.name}
             aria-invalid={displayableErrors.length !== 0}
             aria-required={attribute.required || undefined}
+            aria-describedby={displayableErrors.length !== 0 ? `input-error-${attribute.name}` : undefined}
             disabled={attribute.readOnly}
             cols={attribute.annotations.inputTypeCols === undefined ? undefined : parseInt(`${attribute.annotations.inputTypeCols}`)}
             rows={attribute.annotations.inputTypeRows === undefined ? undefined : parseInt(`${attribute.annotations.inputTypeRows}`)}
@@ -568,6 +569,7 @@ function SelectTag(props: InputFieldByTypeProps) {
             name={attribute.name}
             aria-invalid={displayableErrors.length !== 0}
             aria-required={attribute.required || undefined}
+            aria-describedby={displayableErrors.length !== 0 ? `input-error-${attribute.name}` : undefined}
             disabled={attribute.readOnly}
             multiple={isMultiple}
             size={attribute.annotations.inputTypeSize === undefined ? undefined : parseInt(`${attribute.annotations.inputTypeSize}`)}

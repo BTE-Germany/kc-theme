@@ -191,7 +191,11 @@ function copyWithExecCommand(text: string) {
     const textarea = document.createElement("textarea");
     textarea.value = text;
     textarea.setAttribute("readonly", "");
+    // Fixed at the top with a 16px font, so focusing it neither scrolls nor zooms the page on iOS.
     textarea.style.position = "fixed";
+    textarea.style.top = "0";
+    textarea.style.left = "0";
+    textarea.style.fontSize = "16px";
     textarea.style.opacity = "0";
     const previouslyFocused = document.activeElement as HTMLElement | null;
     document.body.appendChild(textarea);

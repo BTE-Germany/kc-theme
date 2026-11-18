@@ -330,6 +330,14 @@ body {
     }
 }
 
+/* Forced colors (e.g. Windows High Contrast) drop box-shadow based focus rings; draw a system-colored outline instead. */
+@media (forced-colors: active) {
+    :focus-visible {
+        outline: 2px solid CanvasText !important;
+        outline-offset: 2px;
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
