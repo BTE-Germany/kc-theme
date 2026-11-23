@@ -31,7 +31,7 @@ export function PasswordRevealWrapper(props: {
                 aria-label={msgStr(isPasswordRevealed ? "hidePassword" : "showPassword")}
                 aria-controls={passwordInputId}
                 aria-pressed={isPasswordRevealed}
-                className="absolute inset-y-0 right-0 flex w-11 cursor-pointer items-center justify-center rounded-r-md text-muted-foreground transition-colors outline-none hover:text-foreground focus-visible:text-foreground focus-visible:ring-[3px] focus-visible:ring-ring"
+                className="absolute inset-y-0 right-0 flex w-11 cursor-pointer items-center justify-center rounded-r-md text-muted-foreground transition-colors outline-none hover:text-foreground focus-visible:text-foreground focus-visible:inset-ring-2 focus-visible:inset-ring-ring"
             >
                 <span key={String(isPasswordRevealed)} className="animate-pop">
                     {isPasswordRevealed ? (

@@ -8,8 +8,9 @@ const inputClassName = cn(
     "transition-[color,background-color,border-color,box-shadow] duration-200",
     "placeholder:text-muted-foreground/70 selection:bg-primary selection:text-primary-foreground",
     "hover:border-foreground/60",
-    "focus-visible:border-ring focus-visible:bg-input/50 focus-visible:ring-[3px] focus-visible:ring-ring",
-    "aria-invalid:border-red-500",
+    // Focus: a crisp 2px edge (border + inset ring) with a soft glow around it. Invalid fields keep it red.
+    "focus-visible:border-ring focus-visible:bg-input/50 focus-visible:inset-ring-1 focus-visible:inset-ring-ring focus-visible:ring-4 focus-visible:ring-ring/25",
+    "aria-invalid:border-red-500 aria-invalid:focus-visible:border-red-500 aria-invalid:focus-visible:inset-ring-red-500 aria-invalid:focus-visible:ring-red-500/40",
     "disabled:cursor-not-allowed disabled:opacity-50",
     "file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground"
 );
