@@ -2,10 +2,10 @@ import type { PageProps } from "keycloakify/login/pages/PageProps";
 import { IconDeviceMobile, IconDeviceMobileCode } from "@tabler/icons-react";
 import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { PageHeader } from "../components/PageHeader";
 import { Field } from "../components/Field";
+import { OtpInput } from "../components/OtpInput";
 import { useIsSubmitting } from "../components/useIsSubmitting";
 
 export default function LoginOtp(props: PageProps<Extract<KcContext, { pageId: "login-otp.ftl" }>, I18n>) {
@@ -70,15 +70,13 @@ export default function LoginOtp(props: PageProps<Extract<KcContext, { pageId: "
                     errorId="input-error-otp-code"
                     error={hasError ? messagesPerField.get("totp") : undefined}
                 >
-                    <Input
+                    {/* Keycloak does not pass the OTP policy to this page: show 6 boxes (the default) and grow up to 8. */}
+                    <OtpInput
                         id="otp"
                         name="otp"
-                        type="text"
-                        inputMode="numeric"
-                        autoComplete="one-time-code"
-                        spellCheck={false}
+                        length={6}
+                        maxLength={8}
                         autoFocus
-                        className="h-12 text-center font-mono text-lg tracking-[0.3em] md:text-lg"
                         aria-invalid={hasError}
                         aria-describedby={hasError ? "input-error-otp-code" : undefined}
                     />

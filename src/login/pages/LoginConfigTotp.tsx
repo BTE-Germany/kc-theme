@@ -11,6 +11,7 @@ import { cn } from "@/lib/utils";
 import { PageHeader } from "../components/PageHeader";
 import { Field } from "../components/Field";
 import { useIsSubmitting } from "../components/useIsSubmitting";
+import { OtpInput } from "../components/OtpInput";
 
 export default function LoginConfigTotp(props: PageProps<Extract<KcContext, { pageId: "login-config-totp.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
@@ -120,15 +121,11 @@ export default function LoginConfigTotp(props: PageProps<Extract<KcContext, { pa
                     errorId="input-error-otp-code"
                     error={hasTotpError ? messagesPerField.get("totp") : undefined}
                 >
-                    <Input
+                    <OtpInput
                         id="totp"
                         name="totp"
-                        type="text"
-                        inputMode="numeric"
-                        autoComplete="one-time-code"
-                        spellCheck={false}
+                        length={totp.policy.digits}
                         aria-required
-                        className="font-mono tracking-[0.2em]"
                         aria-invalid={hasTotpError}
                         aria-describedby={hasTotpError ? "input-error-otp-code" : undefined}
                     />

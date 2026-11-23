@@ -269,6 +269,29 @@ body {
     }
 }
 
+@keyframes kc-digit-in {
+    from {
+        opacity: 0;
+        transform: translateY(4px) scale(0.85);
+    }
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes kc-caret-blink {
+    0%,
+    70%,
+    100% {
+        opacity: 1;
+    }
+    20%,
+    50% {
+        opacity: 0;
+    }
+}
+
 @utility animate-fade-up {
     animation: kc-fade-up 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
@@ -283,6 +306,14 @@ body {
 
 @utility animate-pop {
     animation: kc-pop 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@utility animate-digit-in {
+    animation: kc-digit-in 180ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@utility animate-caret-blink {
+    animation: kc-caret-blink 1.2s ease-out infinite;
 }
 
 @utility animate-ken-burns {
@@ -330,6 +361,29 @@ body {
     }
 }
 
+/* The real input behind the one-time code boxes (see OtpInput.tsx): it keeps focus, value and autofill, but stays invisible. */
+.kc-otp-input {
+    background: transparent;
+    border: 0;
+    outline: none;
+    box-shadow: none;
+    color: transparent;
+    caret-color: transparent;
+    font-size: 16px; /* At least 16px, so iOS does not zoom in on focus. */
+    letter-spacing: -0.5em;
+    forced-color-adjust: none;
+}
+.kc-otp-input::selection {
+    background: transparent;
+    color: transparent;
+}
+/* Browsers paint autofilled fields with their own background and text color; keep them invisible. */
+.kc-otp-input:is(:autofill, :-webkit-autofill) {
+    box-shadow: none !important;
+    -webkit-text-fill-color: transparent !important;
+    transition: background-color 600000s 0s;
+}
+
 /* Forced colors (e.g. Windows High Contrast) drop box-shadow based focus rings; draw a system-colored outline instead. */
 @media (forced-colors: active) {
     :focus-visible {
@@ -340,6 +394,10 @@ body {
     :where(.overflow-hidden, .overflow-auto, .overflow-x-auto, .overflow-y-auto)
         :focus-visible {
         outline-offset: -2px;
+    }
+    /* The one-time code input marks its active box instead of outlining the whole row. */
+    .kc-otp-input:focus-visible {
+        outline: none !important;
     }
 }
 
