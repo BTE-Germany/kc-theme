@@ -82,7 +82,8 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                 <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/95 to-background" />
             </div>
 
-            <div className="relative z-10 flex min-h-dvh w-full flex-col px-5 sm:px-10 lg:w-1/2 lg:max-w-[720px] lg:shrink-0 lg:border-r lg:border-border/60 lg:bg-background lg:px-14 xl:px-20">
+            {/* On desktop the form panel overlaps the photo by 1px, so no sub-pixel seam shows between them. */}
+            <div className="relative z-10 flex min-h-dvh w-full flex-col px-5 sm:px-10 lg:-me-px lg:w-1/2 lg:max-w-[720px] lg:shrink-0 lg:bg-background lg:forced-colors:border-e lg:px-14 xl:px-20">
                 <header className="flex items-center justify-between gap-4 pt-5 sm:pt-8">
                     <a
                         href={url.loginUrl}
